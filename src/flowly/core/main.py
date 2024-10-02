@@ -22,14 +22,26 @@
 # *                                                                      *
 # ************************************************************************
 
-from attribute import Attribute
+import networkx as nx
+import matplotlib.pyplot as plt
+
+from node import Node
 
 
 if __name__ == "__main__":
     print("Welcome to flowly 0.0.1")
 
-    attrib: Attribute = Attribute("A", uuid="947f4267-792a-11ef-945a-c8d9d2836200")
-    print(attrib)
+    G: nx.DiGraph = nx.DiGraph()
 
-    attrib.name = "B"
-    print(attrib)
+    node_1: Node = Node(name="Node 1")
+    node_2: Node = Node(name="Node 2")
+    node_3: Node = Node(name="Node 3")
+
+    G.add_edge(node_1, node_2)
+    G.add_edge(node_1, node_3)
+    G.add_edge(node_2, node_3)
+
+    node_pos: dict = nx.spring_layout(G)
+    nx.draw(G, pos=node_pos)
+    nx.draw_networkx_labels(G, pos=node_pos)
+    plt.show()

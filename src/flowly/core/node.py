@@ -22,23 +22,18 @@
 # *                                                                         *
 # ***************************************************************************
 
-from uuid import UUID
-from uuid import uuid1
-import logging
+from typing import Optional, Any
+
+from uuid import UUID, uuid1
 
 
-class Attribute:
-    def __init__(self, name: str, uuid: str = "") -> None:
+class Node:
+    def __init__(self, name: str = "Node", uuid: Optional[UUID] = None) -> None:
         self._name: str = name
-
+        self._uuid: UUID = uuid
         if not uuid:
             self._uuid: UUID = uuid1()
-        else:
-            try:
-                self._uuid: UUID = UUID(uuid)
-            except ValueError as e:
-                logging.error(f"Invalid UUID provided: {e}")
-                self._uuid: UUID = uuid1()
+
 
     @property
     def name(self) -> str:
@@ -52,8 +47,17 @@ class Attribute:
     def uuid(self) -> UUID:
         return self._uuid
 
+    def __eq__(self, other: Any) -> bool:
+        if not isinstance(other, Node):
+            return False
+        return self._uuid == other.uuid
+
+    def __hash__(self) -> int:
+        return hash(self._uuid)
+
     def __str__(self) -> str:
-        return f"{type(self).__name__}(name={self._name}, uuid={self._uuid})"
+        # return f"{type(self).__name__}(name={self._name}, uuid={self._uuid})"
+        return self._name
 
     def __repr__(self) -> str:
         return f"<{type(self).__module__}.{type(self).__name__} {self._uuid} at {hex(id(self))}>"
