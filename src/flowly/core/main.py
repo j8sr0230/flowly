@@ -40,6 +40,7 @@ if __name__ == "__main__":
     G.add_edge(node_1, node_2)
     G.add_edge(node_1, node_3)
     G.add_edge(node_2, node_3)
+    print([n.name for n in G.neighbors(node_2)])
 
     node_pos: dict = nx.spring_layout(G)
     nx.draw(G, pos=node_pos)
