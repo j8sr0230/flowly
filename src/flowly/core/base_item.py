@@ -22,12 +22,39 @@
 # *                                                                         *
 # ***************************************************************************
 
-from typing import Optional
-from uuid import UUID
-
-from base_item import BaseItem
+from typing import Optional, Any
+from uuid import UUID, uuid1
 
 
-class Node(BaseItem):
-    def __init__(self, name: str = "Node", uuid: Optional[UUID] = None) -> None:
-        super().__init__(name= name, uuid=uuid)
+class BaseItem:
+    def __init__(self, name: str = "Base Item", uuid: Optional[UUID] = None) -> None:
+        self._name: str = name
+        self._uuid: Optional[UUID] = uuid
+        if not uuid:
+            self._uuid: UUID = uuid1()
+
+    @property
+    def name(self) -> str:
+        return self._name
+
+    @name.setter
+    def name(self, value: str) -> None:
+        self._name: str = value
+
+    @property
+    def uuid(self) -> UUID:
+        return self._uuid
+
+    def __eq__(self, other: Any) -> bool:
+        if not isinstance(other, BaseItem):
+            return False
+        return self._uuid == other.uuid
+
+    def __hash__(self) -> int:
+        return hash(self._uuid)
+
+    def __str__(self) -> str:
+        return self._name
+
+    def __repr__(self) -> str:
+        return f"<{type(self).__module__}.{type(self).__name__} {self._uuid} at {hex(id(self))}>"
