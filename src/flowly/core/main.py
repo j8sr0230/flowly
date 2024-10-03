@@ -25,24 +25,25 @@
 import networkx as nx
 import matplotlib.pyplot as plt
 
+from node_graph import NodeGraph
 from node import Node
 
 
 if __name__ == "__main__":
     print("Welcome to flowly 0.0.1")
 
-    G: nx.DiGraph = nx.DiGraph()
+    node_graph: NodeGraph = NodeGraph()
 
     node_1: Node = Node(name="Node 1")
     node_2: Node = Node(name="Node 2")
     node_3: Node = Node(name="Node 3")
 
-    G.add_edge(node_1, node_2)
-    G.add_edge(node_1, node_3)
-    G.add_edge(node_2, node_3)
-    print([n.name for n in G.neighbors(node_2)])
+    node_graph.add_edge(node_1, node_2)
+    node_graph.add_edge(node_1, node_3)
+    node_graph.add_edge(node_2, node_3)
+    print([n.name for n in node_graph.neighbors(node_2)])
 
-    node_pos: dict = nx.spring_layout(G)
-    nx.draw(G, pos=node_pos)
-    nx.draw_networkx_labels(G, pos=node_pos)
+    node_pos: dict = nx.spring_layout(node_graph)
+    nx.draw(node_graph, pos=node_pos)
+    nx.draw_networkx_labels(node_graph, pos=node_pos)
     plt.show()
