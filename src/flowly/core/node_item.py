@@ -28,6 +28,6 @@ from uuid import UUID
 from base_item import BaseItem
 
 
-class Node(BaseItem):
-    def __init__(self, name: str = "Node", uuid: Optional[UUID] = None) -> None:
+class NodeItem(BaseItem):
+    def __init__(self, name: str = "Node Item", uuid: Optional[UUID] = None) -> None:
         super().__init__(name= name, uuid=uuid)

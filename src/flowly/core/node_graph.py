@@ -24,7 +24,12 @@
 
 import networkx as nx
 
+from node_item import NodeItem
+
 
 class NodeGraph(nx.DiGraph):
     def __init(self) -> None:
         pass
+
+    def add_node_item(self, node: NodeItem) -> None:
+        self.add_node(node)

@@ -26,7 +26,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 
 from node_graph import NodeGraph
-from node import Node
+from node_item import NodeItem
 
 
 if __name__ == "__main__":
@@ -34,14 +34,18 @@ if __name__ == "__main__":
 
     node_graph: NodeGraph = NodeGraph()
 
-    node_1: Node = Node(name="Node 1")
-    node_2: Node = Node(name="Node 2")
-    node_3: Node = Node(name="Node 3")
+    node_1: NodeItem = NodeItem(name="Node Item 1")
+    node_2: NodeItem = NodeItem(name="Node Item 2")
+    node_3: NodeItem = NodeItem(name="Node Item 3")
 
-    node_graph.add_edge(node_1, node_2)
-    node_graph.add_edge(node_1, node_3)
-    node_graph.add_edge(node_2, node_3)
-    print([n.name for n in node_graph.neighbors(node_2)])
+    node_graph.add_node_item(node_1)
+    node_graph.add_node_item(node_2)
+    node_graph.add_node_item(node_3)
+
+    # node_graph.add_edge(node_1, node_2)
+    # node_graph.add_edge(node_1, node_3)
+    # node_graph.add_edge(node_2, node_3)
+    # print([n.name for n in node_graph.neighbors(node_2)])
 
     node_pos: dict = nx.spring_layout(node_graph)
     nx.draw(node_graph, pos=node_pos)
