@@ -22,19 +22,12 @@
 # *                                                                         *
 # ***************************************************************************
 
-import networkx as nx
+from typing import Optional
+from uuid import UUID
 
-from attribute_item import AttributeItem
-from node_item import NodeItem
+from base_item import BaseItem
 
 
-class NodeGraph(nx.DiGraph):
-    def __init(self) -> None:
-        pass
-
-    def add_node_item(self, node: NodeItem) -> None:
-        self.add_node(node)
-
-    def add_edge_item(self, start_node: NodeItem, start_attr: AttributeItem,
-                      end_node: NodeItem, end_attr: AttributeItem) -> None:
-        self.add_edge(start_node, end_node, start_attr=start_attr, end_attr=end_attr)
+class AttributeItem(BaseItem):
+    def __init__(self, name: str = "Attribute Item", uuid: Optional[UUID] = None) -> None:
+        super().__init__(name= name, uuid=uuid)

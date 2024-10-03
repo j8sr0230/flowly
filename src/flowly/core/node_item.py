@@ -26,8 +26,17 @@ from typing import Optional
 from uuid import UUID
 
 from base_item import BaseItem
+from attribute_item import AttributeItem
 
 
 class NodeItem(BaseItem):
     def __init__(self, name: str = "Node Item", uuid: Optional[UUID] = None) -> None:
         super().__init__(name= name, uuid=uuid)
+
+        self._input_attributes: list[AttributeItem] = [
+            AttributeItem(name="A"), AttributeItem(name="B")
+        ]
+
+        self._output_attributes: list[AttributeItem] = [
+            AttributeItem(name="Res")
+        ]
