@@ -22,12 +22,35 @@
 # *                                                                         *
 # ***************************************************************************
 
-from typing import Optional
+from __future__ import annotations
+from typing import TYPE_CHECKING, Optional
 from uuid import UUID
 
 from base_item import BaseItem
+if TYPE_CHECKING:
+    from node_item import NodeItem
 
 
 class AttributeItem(BaseItem):
-    def __init__(self, name: str = "Attribute Item", uuid: Optional[UUID] = None) -> None:
+    def __init__(self, name: str = "Attribute Item", is_input: bool = True, parent: Optional[NodeItem] = None,
+                 uuid: Optional[UUID] = None) -> None:
         super().__init__(name= name, uuid=uuid)
+
+        self._is_input: bool = is_input
+        self._parent: Optional[NodeItem] = parent
+
+    @property
+    def is_input(self) -> bool:
+        return self._is_input
+
+    @is_input.setter
+    def is_input(self, value: bool) -> None:
+        self._is_input: bool = value
+
+    @property
+    def parent(self) -> Optional[NodeItem]:
+        return self._parent
+
+    @parent.setter
+    def parent(self, value: Optional[NodeItem]) -> None:
+        self._parent: Optional[NodeItem] = value

@@ -22,10 +22,14 @@
 # *                                                                         *
 # ***************************************************************************
 
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
 import networkx as nx
 
-from attribute_item import AttributeItem
-from node_item import NodeItem
+if TYPE_CHECKING:
+    from attribute_item import AttributeItem
+    from node_item import NodeItem
 
 
 class NodeGraph(nx.DiGraph):
@@ -33,8 +37,14 @@ class NodeGraph(nx.DiGraph):
         pass
 
     def add_node_item(self, node: NodeItem) -> None:
-        self.add_node(node)
+        for attribute in node.attributes:
+            if attribute.is_input:
+                # noinspection PyTypeChecker
+                self.add_edge(attribute, node, type="internal")
+            else:
+                # noinspection PyTypeChecker
+                self.add_edge(node, attribute, type="internal")
 
-    def add_edge_item(self, start_node: NodeItem, start_attr: AttributeItem,
-                      end_node: NodeItem, end_attr: AttributeItem) -> None:
-        self.add_edge(start_node, end_node, start_attr=start_attr, end_attr=end_attr)
+
+    def add_edge_item(self, start_attribute: AttributeItem, end_attribute: AttributeItem) -> None:
+        self.add_edge(start_attribute, end_attribute, type="external")
