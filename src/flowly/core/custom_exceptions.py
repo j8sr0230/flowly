@@ -22,7 +22,25 @@
 # *                                                                      *
 # ************************************************************************
 
-from attribute_item import AttributeItem
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from node_item import NodeItem
+    from attribute_item import AttributeItem
+
+
+class AttributeIndexException(Exception):
+    def __init__(self, node_item: NodeItem, attribute_id: int, is_input: bool) -> None:
+        super().__init__()
+
+        self._message: str = "Input " if is_input else "Output "
+        self._message += f"attribute item '{node_item.name}.[{attribute_id}]' is not existing."
+
+
+    @property
+    def message(self) -> str:
+        return self._message
 
 
 class AttributeDateTypeException(Exception):
@@ -31,8 +49,10 @@ class AttributeDateTypeException(Exception):
 
         self._message: str = (
             f"Mismatching attribute data types "
-            f"(data type of attribute <{out_attribute_item.name}> is {out_attribute_item.data_type}, "
-            f"data type of attribute <{in_attribute_item.name}> is {in_attribute_item.data_type})"
+            f"(data type of attribute item '{out_attribute_item.parent.name}.{out_attribute_item.name}' is "
+            f"{out_attribute_item.data_type}, "
+            f"data type of attribute item '{in_attribute_item.parent.name}.{in_attribute_item.name}' is "
+            f"{in_attribute_item.data_type})."
         )
 
     @property

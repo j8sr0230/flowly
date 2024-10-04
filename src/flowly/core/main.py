@@ -29,7 +29,7 @@ import matplotlib.pyplot as plt
 
 from node_graph import NodeGraph
 from node_item import NodeItem
-from custom_exceptions import AttributeDateTypeException
+from custom_exceptions import AttributeIndexException, AttributeDateTypeException
 
 
 if __name__ == "__main__":
@@ -48,10 +48,14 @@ if __name__ == "__main__":
     try:
         node_graph.add_edge_item(out_node_item=node_1, out_attribute_id=0, in_node_item=node_2, in_attribute_id=0)
         node_graph.add_edge_item(out_node_item=node_1, out_attribute_id=0, in_node_item=node_2, in_attribute_id=1)
+
+    except AttributeIndexException as attr_ex:
+        logging.warning("No edge created! " + attr_ex.message)
+
     except AttributeDateTypeException as attr_ex:
         logging.warning("No edge created! " + attr_ex.message)
 
-    print([n.name for n in node_graph.neighbors(node_1.output_attributes[0])])
+    print([n.parent.name + "." + n.name for n in node_graph.neighbors(node_1.output_attributes[0])])
 
     node_pos: dict = nx.spring_layout(node_graph, seed=1)
     nx.draw(node_graph, pos=node_pos)

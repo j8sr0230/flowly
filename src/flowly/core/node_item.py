@@ -53,7 +53,6 @@ class NodeItem(BaseItem):
         return self._input_attributes + self._output_attributes
 
     def add_attribute_item(self, attribute_item: AttributeItem):
-        attribute_item.name = self.name + ":" + attribute_item.name
         attribute_item.parent = self
 
         if attribute_item.is_input:

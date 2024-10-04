@@ -23,11 +23,11 @@
 # ************************************************************************
 
 from __future__ import annotations
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Any
 
 import networkx as nx
 
-from custom_exceptions import AttributeDateTypeException
+from custom_exceptions import AttributeIndexException, AttributeDateTypeException
 
 if TYPE_CHECKING:
     from attribute_item import AttributeItem
@@ -50,20 +50,21 @@ class NodeGraph(nx.DiGraph):
 
     def add_edge_item(self, out_node_item: NodeItem, out_attribute_id: int,
                       in_node_item: NodeItem, in_attribute_id: int) -> None:
-        out_attribute_item: Optional[AttributeItem] = None
         if -1 < out_attribute_id < len(out_node_item.output_attributes):
-            out_attribute_item: Optional[AttributeItem] = out_node_item.output_attributes[out_attribute_id]
+            out_attribute_item: AttributeItem = out_node_item.output_attributes[out_attribute_id]
+        else:
+            raise AttributeIndexException(node_item=out_node_item, attribute_id=out_attribute_id, is_input=False)
 
-        in_attribute_item: Optional[AttributeItem] = None
         if -1 < in_attribute_id < len(in_node_item.input_attributes):
-            in_attribute_item: Optional[AttributeItem] = in_node_item.input_attributes[in_attribute_id]
+            in_attribute_item: AttributeItem = in_node_item.input_attributes[in_attribute_id]
+        else:
+            raise AttributeIndexException(node_item=in_node_item, attribute_id=in_attribute_id, is_input=True)
 
-        if out_attribute_item and in_attribute_item:
-            # Edge validation
-            if (Any in [out_attribute_item.data_type, in_attribute_item.data_type] or
-                    out_attribute_item.data_type == in_attribute_item.data_type):
-                self.add_edge(out_attribute_item, in_attribute_item, type="external")
-            else:
-                raise AttributeDateTypeException(
-                    out_attribute_item=out_attribute_item, in_attribute_item=in_attribute_item
-                )
+        if (Any in [out_attribute_item.data_type, in_attribute_item.data_type] or
+                out_attribute_item.data_type == in_attribute_item.data_type
+        ):
+            self.add_edge(out_attribute_item, in_attribute_item, type="external")
+        else:
+            raise AttributeDateTypeException(
+                out_attribute_item=out_attribute_item, in_attribute_item=in_attribute_item
+            )
