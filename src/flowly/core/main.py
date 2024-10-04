@@ -48,10 +48,9 @@ if __name__ == "__main__":
     try:
         node_graph.add_edge_item(out_node_item=node_1, out_attribute_id=0, in_node_item=node_2, in_attribute_id=0)
         node_graph.add_edge_item(out_node_item=node_1, out_attribute_id=0, in_node_item=node_2, in_attribute_id=1)
-
+        node_graph.add_edge_item(out_node_item=node_2, out_attribute_id=0, in_node_item=node_3, in_attribute_id=1)
     except AttributeIndexException as attr_ex:
         logging.warning("No edge created! " + attr_ex.message)
-
     except AttributeDateTypeException as attr_ex:
         logging.warning("No edge created! " + attr_ex.message)
 
