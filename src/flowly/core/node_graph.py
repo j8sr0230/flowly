@@ -23,11 +23,10 @@
 # ************************************************************************
 
 from __future__ import annotations
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, Optional
+import logging
 
 import networkx as nx
-
-from custom_exceptions import AttributeIndexException, AttributeDateTypeException
 
 if TYPE_CHECKING:
     from attribute_item import AttributeItem
@@ -39,14 +38,20 @@ class NodeGraph(nx.DiGraph):
         super().__init__()
 
     @staticmethod
-    def get_attribute_item_by_id(node_item: NodeItem, attribute_id: int, is_input: bool) -> AttributeItem:
-        attributes: list[AttributeItem] = node_item.input_attributes if is_input else node_item.output_attributes
-        if 0 <= attribute_id < len(attributes):
-            return attributes[attribute_id]
+    def get_attribute_item_by_id(node_item: NodeItem, attribute_id) -> Optional[AttributeItem]:
+        """Retrieve attribute item by its ID, or return None if not found."""
+        if 0 <= attribute_id < len(node_item.attributes):
+            return node_item.attributes[attribute_id]
+        return None
 
-        raise AttributeIndexException(node_item=node_item, attribute_id=attribute_id, is_input=is_input)
+    @staticmethod
+    def log_and_return(message: str, node_item: NodeItem, attribute_id: int) -> None:
+        """Logs a warning and returns None."""
+        logging.warning(f"{message} Node: {node_item.name}, Attribute ID: {attribute_id}")
+        return None
 
     def add_node_item(self, node: NodeItem) -> None:
+        """Adds a node to the graph, linking its input and output attributes internally."""
         for attribute in node.attributes:
             if attribute.is_input:
                 # noinspection PyTypeChecker
@@ -57,18 +62,48 @@ class NodeGraph(nx.DiGraph):
 
     def add_edge_item(self, out_node_item: NodeItem, out_attribute_id: int,
                       in_node_item: NodeItem, in_attribute_id: int) -> None:
-        out_attribute_item: AttributeItem = self.get_attribute_item_by_id(
-            node_item=out_node_item, attribute_id=out_attribute_id, is_input=False
+        """Attempts to add an edge between two node attributes and checks for cycles."""
+
+        # Get the attributes by ID
+        out_attr_item: Optional[AttributeItem] = self.get_attribute_item_by_id(
+            node_item=out_node_item, attribute_id=out_attribute_id
         )
-        in_attribute_item: AttributeItem = self.get_attribute_item_by_id(
-            node_item=in_node_item, attribute_id=in_attribute_id, is_input=True
+        in_attr_item: Optional[AttributeItem] = self.get_attribute_item_by_id(
+            node_item=in_node_item, attribute_id=in_attribute_id
         )
 
-        if (Any in [out_attribute_item.data_type, in_attribute_item.data_type] or
-                out_attribute_item.data_type == in_attribute_item.data_type
-        ):
-            self.add_edge(out_attribute_item, in_attribute_item, type="external")
-        else:
-            raise AttributeDateTypeException(
-                out_attribute_item=out_attribute_item, in_attribute_item=in_attribute_item
-            )
+        # Edge validation: check if attributes exist
+        if not out_attr_item:
+            return self.log_and_return("Output attribute item does not exist.", out_node_item, out_attribute_id)
+
+        if not in_attr_item:
+            return self.log_and_return("Input attribute item does not exist.", in_node_item, in_attribute_id)
+
+        # Prevent connection between attributes of the same node
+        if out_attr_item.parent is in_attr_item.parent:
+            return self.log_and_return("Cannot connect attributes from the same node item.",
+                                       in_node_item, in_attribute_id)
+
+        # Prevent connecting two inputs or two outputs
+        if out_attr_item.is_input == in_attr_item.is_input:
+            return self.log_and_return("Cannot connect inputs to inputs or outputs to outputs.",
+                                       in_node_item, in_attribute_id)
+
+        # Check for incompatible data types
+        if (out_attr_item.data_type != in_attr_item.data_type and
+                not Any in [out_attr_item.data_type, in_attr_item.data_type]):
+            return self.log_and_return("Cannot connect attribute items with incompatible data types.",
+                                       in_node_item, in_attribute_id)
+
+        # Add the edge and check for cycles
+        self.add_edge(out_attr_item, in_attr_item, type="external")
+
+        try:
+            # Detect cycle and handle it by removing the edge
+            cycle_edges: list[tuple] = nx.find_cycle(self)
+            if cycle_edges:
+                self.remove_edge(out_attr_item, in_attr_item)
+                return self.log_and_return("Cyclic dependency found.", in_node_item, in_attribute_id)
+
+        except nx.NetworkXNoCycle:
+            pass  # No cycle detected, everything is fine

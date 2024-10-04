@@ -22,14 +22,16 @@
 # *                                                                      *
 # ************************************************************************
 
-import logging
+from __future__ import annotations
+from typing import TYPE_CHECKING
 
 import networkx as nx
 import matplotlib.pyplot as plt
 
 from node_graph import NodeGraph
 from node_item import NodeItem
-from custom_exceptions import AttributeIndexException, AttributeDateTypeException
+if TYPE_CHECKING:
+    from base_item import BaseItem
 
 
 if __name__ == "__main__":
@@ -45,18 +47,23 @@ if __name__ == "__main__":
     node_graph.add_node_item(node=node_2)
     node_graph.add_node_item(node=node_3)
 
-    try:
-        node_graph.add_edge_item(out_node_item=node_1, out_attribute_id=0, in_node_item=node_2, in_attribute_id=0)
-        node_graph.add_edge_item(out_node_item=node_1, out_attribute_id=0, in_node_item=node_2, in_attribute_id=1)
-        node_graph.add_edge_item(out_node_item=node_2, out_attribute_id=0, in_node_item=node_3, in_attribute_id=1)
-    except AttributeIndexException as attr_ex:
-        logging.warning("No edge created! " + attr_ex.message)
-    except AttributeDateTypeException as attr_ex:
-        logging.warning("No edge created! " + attr_ex.message)
+    node_graph.add_edge_item(out_node_item=node_1, out_attribute_id=2, in_node_item=node_2, in_attribute_id=0)
+    node_graph.add_edge_item(out_node_item=node_1, out_attribute_id=2, in_node_item=node_2, in_attribute_id=1)
+    node_graph.add_edge_item(out_node_item=node_2, out_attribute_id=2, in_node_item=node_3, in_attribute_id=0)
+    node_graph.add_edge_item(out_node_item=node_3, out_attribute_id=2, in_node_item=node_1, in_attribute_id=0)
+    node_graph.add_edge_item(out_node_item=node_3, out_attribute_id=2, in_node_item=node_1, in_attribute_id=2)
 
-    print([n.parent.name + "." + n.name for n in node_graph.neighbors(node_1.output_attributes[0])])
+    neighbor_names = [
+        f"{n.parent.name}.{n.name}" if hasattr(n, "parent") else f"{n.name}"
+        for n in node_graph.neighbors(node_1.attributes[2])
+    ]
+    print(neighbor_names)
 
+    # Define a custom graph layout
+    node_sizes: list[int] = [600 if type(node) is NodeItem else 100 for node in node_graph.nodes]
+    node_labels: dict[BaseItem, str] = {
+        node: f"{node.parent.name}.{node.name}" if hasattr(node, "parent") else node.name for node in node_graph.nodes
+    }
     node_pos: dict = nx.spring_layout(node_graph, seed=1)
-    nx.draw(node_graph, pos=node_pos)
-    nx.draw_networkx_labels(node_graph, pos=node_pos)
+    nx.draw(node_graph, pos=node_pos, with_labels=True, node_size=node_sizes)  # , labels=node_labels,
     plt.show()

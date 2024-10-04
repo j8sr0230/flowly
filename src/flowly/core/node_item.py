@@ -33,29 +33,17 @@ class NodeItem(BaseItem):
     def __init__(self, name: str = "Node Item", uuid: Optional[UUID] = None) -> None:
         super().__init__(name= name, uuid=uuid)
 
-        self._input_attributes: list[AttributeItem] = []
-        self._output_attributes: list[AttributeItem] = []
+        self._attributes: list[AttributeItem] = []
 
         self.add_attribute_item(AttributeItem(name="A", data_type=int, is_input=True))
         self.add_attribute_item(AttributeItem(name="B", data_type=int, is_input=True))
         self.add_attribute_item(AttributeItem(name="Res", data_type=Any, is_input=False))
 
     @property
-    def input_attributes(self) -> list[AttributeItem]:
-        return self._input_attributes
-
-    @property
-    def output_attributes(self) -> list[AttributeItem]:
-        return self._output_attributes
-
-    @property
     def attributes(self) -> list[AttributeItem]:
-        return self._input_attributes + self._output_attributes
+        return self._attributes
 
     def add_attribute_item(self, attribute_item: AttributeItem):
         attribute_item.parent = self
 
-        if attribute_item.is_input:
-            self._input_attributes.append(attribute_item)
-        else:
-            self._output_attributes.append(attribute_item)
+        self._attributes.append(attribute_item)
