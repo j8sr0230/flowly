@@ -37,7 +37,6 @@ class AttributeIndexException(Exception):
         self._message: str = "Input " if is_input else "Output "
         self._message += f"attribute item '{node_item.name}.[{attribute_id}]' is not existing."
 
-
     @property
     def message(self) -> str:
         return self._message
