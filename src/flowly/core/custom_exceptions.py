@@ -22,39 +22,19 @@
 # *                                                                      *
 # ************************************************************************
 
-from typing import Any, Optional
-from uuid import UUID, uuid1
+from attribute_item import AttributeItem
 
 
-class BaseItem:
-    def __init__(self, name: str = "Base Item", uuid: Optional[UUID] = None) -> None:
-        self._name: str = name
-        self._uuid: Optional[UUID] = uuid
-        if not uuid:
-            self._uuid: UUID = uuid1()
+class AttributeDateTypeException(Exception):
+    def __init__(self, out_attribute_item: AttributeItem, in_attribute_item: AttributeItem) -> None:
+        super().__init__()
 
-    @property
-    def name(self) -> str:
-        return self._name
-
-    @name.setter
-    def name(self, value: str) -> None:
-        self._name: str = value
+        self._message: str = (
+            f"Mismatching attribute data types "
+            f"(data type of attribute <{out_attribute_item.name}> is {out_attribute_item.data_type}, "
+            f"data type of attribute <{in_attribute_item.name}> is {in_attribute_item.data_type})"
+        )
 
     @property
-    def uuid(self) -> UUID:
-        return self._uuid
-
-    def __eq__(self, other: Any) -> bool:
-        if not isinstance(other, BaseItem):
-            return False
-        return self._uuid == other.uuid
-
-    def __hash__(self) -> int:
-        return hash(self._uuid)
-
-    def __str__(self) -> str:
-        return self._name
-
-    def __repr__(self) -> str:
-        return f"<{type(self).__module__}.{type(self).__name__} {self._uuid} at {hex(id(self))}>"
+    def message(self) -> str:
+        return self._message
