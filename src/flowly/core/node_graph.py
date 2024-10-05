@@ -29,6 +29,7 @@ import logging
 import networkx as nx
 
 if TYPE_CHECKING:
+    from base_item import BaseItem
     from attribute_item import AttributeItem
     from node_item import NodeItem
 
@@ -57,6 +58,35 @@ class NodeGraph(nx.DiGraph):
             else:
                 # noinspection PyTypeChecker
                 self.add_edge(node, attribute, type="internal")
+
+    def add_node_group_item(self, node_items: list[NodeItem]) -> nx.Graph:
+        attribute_items: list[BaseItem] = []
+        for node in node_items:
+            attribute_items.extend(node.attributes)
+
+        inner_items: list[BaseItem] = attribute_items + node_items
+        outer_items: list[BaseItem] = [item for item in self.nodes if item not in inner_items]
+
+        temp_graph: nx.DiGraph = self.copy()
+        temp_graph.remove_edges_from(
+            (item, neighbour, data)
+            for item, neighbour in self.adj.items()
+            if item in inner_items
+            for neighbour, data in neighbour.items()
+            if neighbour in outer_items
+        )
+        temp_graph.remove_edges_from(
+            (item, neighbour, data)
+            for item, neighbour in self.adj.items()
+            if item in outer_items
+            for neighbour, data in neighbour.items()
+            if neighbour in inner_items
+        )
+
+        return temp_graph
+
+        # sub_graph: nx.Graph = self.subgraph(node_items + inner_items)
+        # return sub_graph
 
     def validate_connection(self, out_attribute_item: AttributeItem, in_attribute_item: AttributeItem) -> Optional[str]:
         """

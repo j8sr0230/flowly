@@ -67,3 +67,9 @@ if __name__ == "__main__":
     node_pos: dict = nx.spring_layout(node_graph, seed=1)
     nx.draw(node_graph, pos=node_pos, with_labels=True, node_size=node_sizes)  # , labels=node_labels,
     plt.show()
+
+    sub_graph: nx.Graph = node_graph.add_node_group_item([node_1, node_2])
+    nx.draw(sub_graph, pos=node_pos, with_labels=True)
+    plt.show()
+
+    # print([(n.name, nbrs) for n, nbrs in node_graph.adj.items()])
