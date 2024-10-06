@@ -28,6 +28,7 @@ from typing import TYPE_CHECKING
 import networkx as nx
 import matplotlib.pyplot as plt
 
+from flowly.core.operator_item import OperatorItem
 from node_graph import NodeGraph
 from node_item import NodeItem
 if TYPE_CHECKING:
@@ -43,9 +44,9 @@ if __name__ == "__main__":
     node_2: NodeItem = NodeItem(name="Node Item 2")
     node_3: NodeItem = NodeItem(name="Node Item 3")
 
-    node_graph.add_node_item(node=node_1)
-    node_graph.add_node_item(node=node_2)
-    node_graph.add_node_item(node=node_3)
+    node_graph.add_node_item(node_item=node_1)
+    node_graph.add_node_item(node_item=node_2)
+    node_graph.add_node_item(node_item=node_3)
 
     node_graph.add_edge_item(out_node_item=node_1, out_attribute_id=2, in_node_item=node_2, in_attribute_id=0)
     node_graph.add_edge_item(out_node_item=node_1, out_attribute_id=2, in_node_item=node_2, in_attribute_id=1)
@@ -55,21 +56,21 @@ if __name__ == "__main__":
 
     neighbor_names = [
         f"{n.parent.name}.{n.name}" if hasattr(n, "parent") else f"{n.name}"
-        for n in node_graph.neighbors(node_1.attributes[2])
+        for n in node_graph.main_graph.neighbors(node_1.attribute_items[2])
     ]
     print(neighbor_names)
 
     # Define a custom graph layout
-    node_sizes: list[int] = [600 if type(node) is NodeItem else 100 for node in node_graph.nodes]
+    node_sizes: list[int] = [600 if type(node) is OperatorItem else 100 for node in node_graph.main_graph]
     node_labels: dict[BaseItem, str] = {
-        node: f"{node.parent.name}.{node.name}" if hasattr(node, "parent") else node.name for node in node_graph.nodes
+        node: f"{node.parent.name}.{node.name}" if hasattr(node, "parent") else node.name for node in node_graph.main_graph
     }
-    node_pos: dict = nx.spring_layout(node_graph, seed=1)
-    nx.draw(node_graph, pos=node_pos, with_labels=True, node_size=node_sizes)  # , labels=node_labels,
+    node_pos: dict = nx.spring_layout(node_graph.main_graph, seed=1)
+    nx.draw(node_graph.main_graph, pos=node_pos, with_labels=True, node_size=node_sizes)  # , labels=node_labels,
     plt.show()
 
-    sub_graph: nx.Graph = node_graph.add_node_group_item([node_1, node_2])
-    nx.draw(sub_graph, pos=node_pos, with_labels=True)
-    plt.show()
+    # sub_graph: nx.Graph = node_graph.add_node_group_item([node_1, node_2])
+    # nx.draw(sub_graph, pos=node_pos, with_labels=True)
+    # plt.show()
 
-    # print([(n.name, nbrs) for n, nbrs in node_graph.adj.items()])
+    # print([(n.name, nbrs) for n, nbrs in node_graph.main_graph.adj.items()])

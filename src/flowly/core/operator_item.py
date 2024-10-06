@@ -22,51 +22,27 @@
 # *                                                                      *
 # ************************************************************************
 
-from typing import Optional, Any
+from __future__ import annotations
+from typing import TYPE_CHECKING, Any, Optional
 from uuid import UUID
 
-import networkx as nx
-
 from flowly.core.base_item import BaseItem
-from flowly.core.attribute_item import AttributeItem, AttributeFlags
-from flowly.core.operator_item import OperatorItem
+if TYPE_CHECKING:
+    from flowly.core.node_item import NodeItem
 
 
-class NodeItem(BaseItem):
-    def __init__(self, name: str = "Node Item", uuid: Optional[UUID] = None) -> None:
-        super().__init__(name=name, uuid=uuid)
+class OperatorItem(BaseItem):
+    def __init__(self, name: str = "Operator Item", uuid: Optional[UUID] = None,
+                 parent: Optional[NodeItem] = None) -> None:
+        super().__init__(name= name, uuid=uuid)
 
-        self._attribute_items: list[AttributeItem] = [
-            AttributeItem(name="A", data=0, data_type=int, flag=AttributeFlags.INPUT, parent=self),
-            AttributeItem(name="B", data=0, data_type=int, flag=AttributeFlags.INPUT, parent=self),
-            AttributeItem(name="Res", data=None, data_type=Any, flag=AttributeFlags.OUTPUT, parent=self)
-        ]
-
-        self._operator_item: OperatorItem = OperatorItem(name="Add", parent=self)
-
-        self._internal_graph: nx.DiGraph = nx.DiGraph()
-        self.update_internal_graph()
+        self._parent: Optional[NodeItem] = parent
 
     @property
-    def attribute_items(self) -> list[AttributeItem]:
-        return self._attribute_items
+    def parent(self) -> Optional[NodeItem]:
+        return self._parent
 
-    @property
-    def operator_item(self) -> OperatorItem:
-        return self._operator_item
-
-    @property
-    def internal_graph(self) -> nx.DiGraph:
-        return self._internal_graph
-
-    def update_internal_graph(self) -> None:
-        self._internal_graph.clear()
-
-        for attribute in self.attribute_items:
-            if attribute.flag is AttributeFlags.INPUT:
-                # noinspection PyTypeChecker
-                self._internal_graph.add_edge(attribute, self._operator_item)
-            else:
-                # noinspection PyTypeChecker
-                self._internal_graph.add_edge(self._operator_item, attribute)
-
+    # noinspection PyUnusedLocal
+    @staticmethod
+    def evaluate(*args: Any, **kwargs: Any) -> Any:
+        return 0

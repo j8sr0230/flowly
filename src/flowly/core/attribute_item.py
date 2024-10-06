@@ -25,37 +25,46 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING, Any, Optional
 from uuid import UUID
+from enum import Enum
 
-from base_item import BaseItem
+from flowly.core.base_item import BaseItem
 if TYPE_CHECKING:
-    from node_item import NodeItem
+    from flowly.core.node_item import NodeItem
+
+
+class AttributeFlags(Enum):
+    OPTION: int = 0
+    INPUT: int = 1
+    OUTPUT: int = 2
 
 
 class AttributeItem(BaseItem):
-    def __init__(self, name: str = "Attribute Item", data_type: type = Any, is_input: bool = True,
-                 parent: Optional[NodeItem] = None, uuid: Optional[UUID] = None) -> None:
+    def __init__(self, name: str = "Attribute Item", uuid: Optional[UUID] = None, data: Any = None,
+                 data_type: type = Any, flag: AttributeFlags = AttributeFlags.INPUT,
+                 parent: Optional[NodeItem] = None) -> None:
         super().__init__(name= name, uuid=uuid)
 
-        self._is_input: bool = is_input
-        self._data_type: type = data_type
+        self._data: Any = data
+        self._data_type: Any = data_type
+        self._flag: AttributeFlags = flag
         self._parent: Optional[NodeItem] = parent
 
     @property
-    def is_input(self) -> bool:
-        return self._is_input
+    def data(self) -> Any:
+        return self._data
 
-    @is_input.setter
-    def is_input(self, value: bool) -> None:
-        self._is_input: bool = value
+    @data.setter
+    def data(self, value: Any):
+        self._data: Any = value
 
     @property
-    def data_type(self) -> Any:
+    def data_type(self) -> type:
         return self._data_type
+
+    @property
+    def flag(self) -> AttributeFlags:
+        return self._flag
 
     @property
     def parent(self) -> Optional[NodeItem]:
         return self._parent
-
-    @parent.setter
-    def parent(self, value: Optional[NodeItem]) -> None:
-        self._parent: Optional[NodeItem] = value

@@ -1,0 +1,40 @@
+@startuml classes
+set namespaceSeparator none
+class "AttributeFlags" as flowly.core.attribute_item.AttributeFlags {
+  name
+}
+class "AttributeItem" as flowly.core.attribute_item.AttributeItem {
+  data
+  data_type
+  flag
+  parent
+}
+class "BaseItem" as flowly.core.base_item.BaseItem {
+  name
+  uuid
+}
+class "NodeGraph" as flowly.core.node_graph.NodeGraph {
+  main_graph
+  node_items
+  add_edge_item(out_node_item: NodeItem, out_attribute_id: int, in_node_item: NodeItem, in_attribute_id: int) -> None
+  add_node_item(node_item: NodeItem) -> None
+  can_connect(out_attribute_item: AttributeItem, in_attribute_item: AttributeItem) -> bool
+  get_attribute_item_by_id(node_item: NodeItem, attribute_id: int) -> Optional[AttributeItem]
+  validate_connection(out_attribute_item: Optional[AttributeItem], in_attribute_item: Optional[AttributeItem]) -> Optional[str]
+}
+class "NodeItem" as flowly.core.node_item.NodeItem {
+  attribute_items
+  internal_graph
+  operator_item
+  update_internal_graph() -> None
+}
+class "OperatorItem" as flowly.core.operator_item.OperatorItem {
+  parent
+  evaluate() -> Any
+}
+flowly.core.attribute_item.AttributeItem --|> flowly.core.base_item.BaseItem
+flowly.core.node_item.NodeItem --|> flowly.core.base_item.BaseItem
+flowly.core.operator_item.OperatorItem --|> flowly.core.base_item.BaseItem
+flowly.core.operator_item.OperatorItem --* flowly.core.node_item.NodeItem : _operator_item
+flowly.core.attribute_item.AttributeFlags --o flowly.core.attribute_item.AttributeItem : _flag
+@enduml
