@@ -22,27 +22,51 @@
 # *                                                                      *
 # ************************************************************************
 
-from __future__ import annotations
-from typing import TYPE_CHECKING, Any, Optional
-from uuid import UUID
+import os
+import sys
 
-from flowly.core.hashable import Hashable
-if TYPE_CHECKING:
-    from flowly.core.node_item import NodeItem
+sys.path.insert(0, os.path.abspath('../../src/'))
+
+# Configuration file for the Sphinx documentation builder.
+#
+# For the full list of built-in configuration values, see the documentation:
+# https://www.sphinx-doc.org/en/master/usage/configuration.html
+
+# -- Project information -----------------------------------------------------
+# https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
+
+project = 'flowly'
+copyright = '2024, Ronny Scharf-Wildenhain'
+author = 'Ronny Scharf-Wildenhain'
+release = '0.0.1'
 
 
-class OperatorItem(Hashable):
-    def __init__(self, name: str = "Operator Item", uuid: Optional[UUID] = None,
-                 parent: Optional[NodeItem] = None) -> None:
-        super().__init__(name= name, uuid=uuid)
+# -- General configuration ---------------------------------------------------
+# https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-        self._parent: Optional[NodeItem] = parent
+extensions = [
+    'sphinx.ext.autodoc',
+    'sphinx.ext.napoleon',  # To support Google-style and NumPy-style docstrings
+    'sphinx.ext.autosummary',
+    'sphinx_autodoc_typehints',  # Optional, for type hinting support
+]
 
-    @property
-    def parent(self) -> Optional[NodeItem]:
-        return self._parent
+templates_path = ['_templates']
+exclude_patterns = []
 
-    # noinspection PyUnusedLocal
-    @staticmethod
-    def evaluate(*args: Any, **kwargs: Any) -> Any:
-        return 0
+autosummary_generate = True
+autodoc_default_options = {
+    'members': True,
+    'undoc-members': True,
+    'private-members': False,
+    'special-members': '__init__',
+    'inherited-members': True,
+    'show-inheritance': True,
+}
+
+
+# -- Options for HTML output -------------------------------------------------
+# https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
+
+html_theme = 'alabaster'
+html_static_path = ['_static']

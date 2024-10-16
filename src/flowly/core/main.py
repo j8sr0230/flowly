@@ -32,7 +32,7 @@ from flowly.core.operator_item import OperatorItem
 from node_graph import NodeGraph
 from node_item import NodeItem
 if TYPE_CHECKING:
-    from base_item import BaseItem
+    from hashable import Hashable
 
 
 if __name__ == "__main__":
@@ -62,7 +62,7 @@ if __name__ == "__main__":
 
     # Define a custom graph layout
     node_sizes: list[int] = [600 if type(node) is OperatorItem else 100 for node in node_graph.main_graph]
-    node_labels: dict[BaseItem, str] = {
+    node_labels: dict[Hashable, str] = {
         node: f"{node.parent.name}.{node.name}" if hasattr(node, "parent") else node.name for node in node_graph.main_graph
     }
     node_pos: dict = nx.spring_layout(node_graph.main_graph, seed=1)
