@@ -48,6 +48,7 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',  # To support Google-style and NumPy-style docstrings
     'sphinx.ext.autosummary',
+    "sphinx.ext.githubpages",
     'sphinx_autodoc_typehints',  # Optional, for type hinting support
 ]
 
