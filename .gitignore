@@ -51,4 +51,4 @@ wheels/
 *.egg
 
 # Documentation
-docs/_build/
+docs/build/
