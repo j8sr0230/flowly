@@ -35,6 +35,7 @@ if TYPE_CHECKING:
     from hashable import Hashable
 
 
+# Main
 if __name__ == "__main__":
     print("Welcome to flowly 0.0.1")
 
