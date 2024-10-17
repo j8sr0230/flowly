@@ -28,18 +28,18 @@ from uuid import UUID
 
 from flowly.core.hashable import Hashable
 if TYPE_CHECKING:
-    from flowly.core.node_item import NodeItem
+    from flowly.core.node import Node
 
 
 class OperatorItem(Hashable):
     def __init__(self, name: str = "Operator Item", uuid: Optional[UUID] = None,
-                 parent: Optional[NodeItem] = None) -> None:
+                 parent: Optional[Node] = None) -> None:
         super().__init__(name= name, uuid=uuid)
 
-        self._parent: Optional[NodeItem] = parent
+        self._parent: Optional[Node] = parent
 
     @property
-    def parent(self) -> Optional[NodeItem]:
+    def parent(self) -> Optional[Node]:
         return self._parent
 
     # noinspection PyUnusedLocal

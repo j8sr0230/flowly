@@ -22,51 +22,49 @@
 # *                                                                      *
 # ************************************************************************
 
-from typing import Optional, Any
+from __future__ import annotations
+from typing import TYPE_CHECKING, Any, Optional
 from uuid import UUID
-
-import networkx as nx
+from enum import Enum
 
 from flowly.core.hashable import Hashable
-from flowly.core.attribute_item import AttributeItem, AttributeFlags
-from flowly.core.operator_item import OperatorItem
+if TYPE_CHECKING:
+    from flowly.core.node import Node
 
 
-class NodeItem(Hashable):
-    def __init__(self, name: str = "Node Item", uuid: Optional[UUID] = None) -> None:
-        super().__init__(name=name, uuid=uuid)
+class AttributeFlags(Enum):
+    OPTION: int = 0
+    INPUT: int = 1
+    OUTPUT: int = 2
 
-        self._attribute_items: list[AttributeItem] = [
-            AttributeItem(name="A", data=0, data_type=int, flag=AttributeFlags.INPUT, parent=self),
-            AttributeItem(name="B", data=0, data_type=int, flag=AttributeFlags.INPUT, parent=self),
-            AttributeItem(name="Res", data=None, data_type=Any, flag=AttributeFlags.OUTPUT, parent=self)
-        ]
 
-        self._operator_item: OperatorItem = OperatorItem(name="Add", parent=self)
+class Attribute(Hashable):
+    def __init__(self, name: str = "Attribute Item", uuid: Optional[UUID] = None, data: Any = None,
+                 data_type: type = Any, flag: AttributeFlags = AttributeFlags.INPUT,
+                 parent: Optional[Node] = None) -> None:
+        super().__init__(name= name, uuid=uuid)
 
-        self._internal_graph: nx.DiGraph = nx.DiGraph()
-        self.update_internal_graph()
-
-    @property
-    def attribute_items(self) -> list[AttributeItem]:
-        return self._attribute_items
+        self._data: Any = data
+        self._data_type: Any = data_type
+        self._flag: AttributeFlags = flag
+        self._parent: Optional[Node] = parent
 
     @property
-    def operator_item(self) -> OperatorItem:
-        return self._operator_item
+    def data(self) -> Any:
+        return self._data
+
+    @data.setter
+    def data(self, value: Any):
+        self._data: Any = value
 
     @property
-    def internal_graph(self) -> nx.DiGraph:
-        return self._internal_graph
+    def data_type(self) -> type:
+        return self._data_type
 
-    def update_internal_graph(self) -> None:
-        self._internal_graph.clear()
+    @property
+    def flag(self) -> AttributeFlags:
+        return self._flag
 
-        for attribute in self.attribute_items:
-            if attribute.flag is AttributeFlags.INPUT:
-                # noinspection PyTypeChecker
-                self._internal_graph.add_edge(attribute, self._operator_item)
-            else:
-                # noinspection PyTypeChecker
-                self._internal_graph.add_edge(self._operator_item, attribute)
-
+    @property
+    def parent(self) -> Optional[Node]:
+        return self._parent

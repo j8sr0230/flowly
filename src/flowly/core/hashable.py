@@ -22,8 +22,10 @@
 # *                                                                      *
 # ************************************************************************
 
-from typing import Any, Optional
+from __future__ import annotations
 from uuid import UUID, uuid1
+from typing import Any, Optional, Dict
+import json
 
 
 class Hashable:
@@ -33,34 +35,20 @@ class Hashable:
     The `Hashable` class generates a UUID for each instance, which is used to make instances
     hashable and comparable. If a UUID is not provided during initialization, a new UUID
     is generated automatically.
-
-    :ivar UUID _uuid: The unique identifier for the instance. This is either provided during
-                     initialization or generated automatically using `uuid1()`.
     """
+
+    __slots__ = ('_uuid', '_hash')  # Use __slots__ to reduce memory usage
 
     def __init__(self, uuid: Optional[UUID] = None) -> None:
         """
         Initializes a Hashable instance.
 
         :param uuid: The UUID for the instance. If not provided, a new UUID is generated
-                    using `uuid1()`.
+                     using `uuid1()`.
         :type uuid: Optional[UUID]
         """
-
-        self._uuid: Optional[UUID] = uuid
-        if not uuid:
-            self._uuid: UUID = uuid1()
-
-    @property
-    def uuid(self) -> UUID:
-        """
-        Returns the UUID of the instance.
-
-        :return: The unique identifier for this instance.
-        :rtype: UUID
-        """
-
-        return self._uuid
+        self._uuid: UUID = uuid or uuid1()
+        self._hash = hash(self._uuid)  # Cache the hash value
 
     def __eq__(self, other: Any) -> bool:
         """
@@ -71,19 +59,16 @@ class Hashable:
         :return: `True` if the other object is a `Hashable` instance with the same UUID, `False` otherwise.
         :rtype: bool
         """
-
-        if not isinstance(other, Hashable):
-            return False
-        return self._uuid == other.uuid
+        return isinstance(other, Hashable) and self._uuid == other.uuid
 
     def __hash__(self) -> int:
         """
-        Returns the hash value of the instance, based on the UUID.
+        Returns the hash value of the instance, based on the cached UUID hash.
 
         :return: The hash value of the UUID.
         :rtype: int
         """
-        return hash(self._uuid)
+        return self._hash
 
     def __repr__(self) -> str:
         """
@@ -92,5 +77,61 @@ class Hashable:
         :return: A string representation including the module, class name, UUID, and memory address.
         :rtype: str
         """
-
         return f"<{type(self).__module__}.{type(self).__name__} {self._uuid} at {hex(id(self))}>"
+
+    @classmethod
+    def from_dict(cls, data: Dict[str, str]) -> Hashable:
+        """
+        Creates an instance from a dictionary.
+
+        :param data: A dictionary containing the UUID.
+        :type data: Dict[str, str]
+        :return: An instance of `Hashable`.
+        :rtype: Hashable
+        """
+        if 'uuid' not in data:
+            raise ValueError("Dictionary must contain a 'uuid' key.")
+        uuid = UUID(data['uuid'])
+        return cls(uuid)
+
+    @classmethod
+    def from_json(cls, json_str: str) -> Hashable:
+        """
+        Creates an instance from a JSON string.
+
+        :param json_str: A JSON string representing the instance.
+        :type json_str: str
+        :return: An instance of `Hashable`.
+        :rtype: Hashable
+        """
+        data = json.loads(json_str)
+        return cls.from_dict(data)
+
+    @property
+    def uuid(self) -> UUID:
+        """
+        Returns the UUID of the instance. The UUID is cached after the first access.
+
+        :return: The unique identifier for this instance.
+        :rtype: UUID
+        """
+        return self._uuid
+
+    def to_dict(self) -> Dict[str, str]:
+        """
+        Converts the instance to a dictionary representation.
+
+        :return: A dictionary with the UUID.
+        :rtype: Dict[str, str]
+        """
+        return {'uuid': str(self._uuid)}
+
+
+    def to_json(self) -> str:
+        """
+        Converts the instance to a JSON string.
+
+        :return: A JSON string representing the instance.
+        :rtype: str
+        """
+        return json.dumps(self.to_dict())

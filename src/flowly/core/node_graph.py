@@ -27,12 +27,12 @@ from typing import TYPE_CHECKING, Any, Optional
 import logging
 
 import networkx as nx
-from flowly.core.attribute_item import AttributeFlags
+from flowly.core.attribute import AttributeFlags
 
 if TYPE_CHECKING:
     from flowly.core.hashable import Hashable
-    from flowly.core.attribute_item import AttributeItem
-    from flowly.core.node_item import NodeItem
+    from flowly.core.attribute import Attribute
+    from flowly.core.node import Node
 
 
 # Configure logging with timestamp and more context
@@ -41,30 +41,30 @@ logging.basicConfig(level=logging.WARNING, format='%(asctime)s - %(levelname)s -
 
 class NodeGraph:
     def __init__(self) -> None:
-        self._node_items: list[NodeItem] = []
+        self._node_items: list[Node] = []
         self._main_graph: nx.DiGraph = nx.DiGraph()
 
     @property
-    def node_items(self) -> list[NodeItem]:
+    def node_items(self) -> list[Node]:
         return self._node_items
 
     @property
     def main_graph(self) -> nx.DiGraph:
         return self._main_graph
 
-    def add_node_item(self, node_item: NodeItem) -> None:
+    def add_node_item(self, node_item: Node) -> None:
         """Adds the node_item to the items list and its internal graph to the main graph."""
         self._node_items.append(node_item)
         self._main_graph: nx.DiGraph = nx.compose(self._main_graph, node_item.internal_graph)
 
     @staticmethod
-    def get_attribute_item_by_id(node_item: NodeItem, attribute_id: int) -> Optional[AttributeItem]:
+    def get_attribute_item_by_id(node_item: Node, attribute_id: int) -> Optional[Attribute]:
         """Retrieve attribute item by its ID, or return None if not found."""
         if 0 <= attribute_id < len(node_item.attribute_items):
             return node_item.attribute_items[attribute_id]
         return None
 
-    # def add_node_group_item(self, node_items: list[NodeItem]) -> nx.Graph:
+    # def add_node_group_item(self, node_items: list[Node]) -> nx.Graph:
     #     attribute_items: list[Hashable] = []
     #     for node in node_items:
     #         attribute_items.extend(node.attribute_items)
@@ -93,8 +93,8 @@ class NodeGraph:
     #     # sub_graph: nx.Graph = self.subgraph(node_items + inner_items)
     #     # return sub_graph
     #
-    def validate_connection(self, out_attribute_item: Optional[AttributeItem],
-                            in_attribute_item: Optional[AttributeItem]) -> Optional[str]:
+    def validate_connection(self, out_attribute_item: Optional[Attribute],
+                            in_attribute_item: Optional[Attribute]) -> Optional[str]:
         """
         Validates if a connection between two attribute_items is possible.
         Returns an error message if validation fails, or None if the connection is valid.
@@ -126,7 +126,7 @@ class NodeGraph:
 
         return None
 
-    def can_connect(self, out_attribute_item: AttributeItem, in_attribute_item: AttributeItem) -> bool:
+    def can_connect(self, out_attribute_item: Attribute, in_attribute_item: Attribute) -> bool:
         """
         Determines if two attribute_items can be connected, performs validation, checks for cycles, and logs any issues.
         Returns True if the connection is valid, False otherwise.
@@ -137,11 +137,11 @@ class NodeGraph:
             return False
         return True
 
-    def add_edge_item(self, out_node_item: NodeItem, out_attribute_id: int,
-                      in_node_item: NodeItem, in_attribute_id: int) -> None:
+    def add_edge_item(self, out_node_item: Node, out_attribute_id: int,
+                      in_node_item: Node, in_attribute_id: int) -> None:
         """Attempts to add an edge between two node attribute_items."""
-        out_attr_item: Optional[AttributeItem] = self.get_attribute_item_by_id(out_node_item, out_attribute_id)
-        in_attr_item: Optional[AttributeItem] = self.get_attribute_item_by_id(in_node_item, in_attribute_id)
+        out_attr_item: Optional[Attribute] = self.get_attribute_item_by_id(out_node_item, out_attribute_id)
+        in_attr_item: Optional[Attribute] = self.get_attribute_item_by_id(in_node_item, in_attribute_id)
 
         if self.can_connect(out_attr_item, in_attr_item):
             self._main_graph.add_edge(out_attr_item, in_attr_item)
