@@ -1,5 +1,16 @@
 @startuml classes
 set namespaceSeparator none
+class "flowly.core.attribute.Attribute" as flowly.core.attribute.Attribute {
+  data
+  data_type
+  flag
+  name
+  parent
+  from_dict(data: Dict[str, Any]) -> Attribute
+  from_json(json_str: str) -> Attribute
+  to_dict() -> Dict[str, Any]
+  to_json() -> str
+}
 class "flowly.core.base_entity.BaseEntity" as flowly.core.base_entity.BaseEntity {
   uuid
   from_dict(data: Dict[str, str]) -> BaseEntity
@@ -7,4 +18,9 @@ class "flowly.core.base_entity.BaseEntity" as flowly.core.base_entity.BaseEntity
   to_dict() -> Dict[str, str]
   to_json() -> str
 }
+class "flowly.core.enumerations.AttributeFlags" as flowly.core.enumerations.AttributeFlags {
+  name
+}
+flowly.core.attribute.Attribute --|> flowly.core.base_entity.BaseEntity
+flowly.core.enumerations.AttributeFlags --o flowly.core.attribute.Attribute : _flag
 @enduml

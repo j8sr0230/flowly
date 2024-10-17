@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-
 # -*- coding: utf-8 -*-
+
 # ************************************************************************
 # * Copyright (c) 2024 Ronny Scharf-W. <ronny.scharf08@gmail.com>        *
 # *                                                                      *
@@ -22,70 +22,20 @@
 # *                                                                      *
 # ************************************************************************
 
-# from __future__ import annotations
-# from typing import TYPE_CHECKING
-
-# import networkx as nx
-# import matplotlib.pyplot as plt
-#
-# from flowly.core.operator_item import OperatorItem
-# from node_graph import NodeGraph
-# from node import Node
-# if TYPE_CHECKING:
-#     from hashable import BaseEntity
 
 from flowly.core.base_entity import BaseEntity
+from flowly.core.attribute import Attribute
 
-
-# Main
 if __name__ == "__main__":
 
-    item: BaseEntity = BaseEntity()
-    print(item)
+    base_entity: BaseEntity = BaseEntity()
+    deserialized_base_entity: BaseEntity = BaseEntity.from_json(base_entity.to_json())
+    print(base_entity.to_dict())
+    print(deserialized_base_entity.to_dict())
+    print(base_entity == deserialized_base_entity)
 
-    json = item.to_json()
-    print(json)
-
-    h = BaseEntity.from_json(json)
-    print(h)
-
-    print(h == BaseEntity())
-
-    # print("Welcome to flowly 0.0.1")
-    #
-    # node_graph: NodeGraph = NodeGraph()
-    #
-    # node_1: Node = Node(name="Node Item 1")
-    # node_2: Node = Node(name="Node Item 2")
-    # node_3: Node = Node(name="Node Item 3")
-    #
-    # node_graph.add_node_item(node_item=node_1)
-    # node_graph.add_node_item(node_item=node_2)
-    # node_graph.add_node_item(node_item=node_3)
-    #
-    # node_graph.add_edge_item(out_node_item=node_1, out_attribute_id=2, in_node_item=node_2, in_attribute_id=0)
-    # node_graph.add_edge_item(out_node_item=node_1, out_attribute_id=2, in_node_item=node_2, in_attribute_id=1)
-    # node_graph.add_edge_item(out_node_item=node_2, out_attribute_id=2, in_node_item=node_3, in_attribute_id=0)
-    # node_graph.add_edge_item(out_node_item=node_3, out_attribute_id=2, in_node_item=node_1, in_attribute_id=0)
-    # node_graph.add_edge_item(out_node_item=node_3, out_attribute_id=2, in_node_item=node_1, in_attribute_id=2)
-    #
-    # neighbor_names = [
-    #     f"{n.parent.name}.{n.name}" if hasattr(n, "parent") else f"{n.name}"
-    #     for n in node_graph.main_graph.neighbors(node_1.attribute_items[2])
-    # ]
-    # print(neighbor_names)
-    #
-    # # Define a custom graph layout
-    # node_sizes: list[int] = [600 if type(node) is OperatorItem else 100 for node in node_graph.main_graph]
-    # node_labels: dict[BaseEntity, str] = {
-    #     node: f"{node.parent.name}.{node.name}" if hasattr(node, "parent") else node.name for node in node_graph.main_graph
-    # }
-    # node_pos: dict = nx.spring_layout(node_graph.main_graph, seed=1)
-    # nx.draw(node_graph.main_graph, pos=node_pos, with_labels=True, node_size=node_sizes)  # , labels=node_labels,
-    # plt.show()
-
-    # sub_graph: nx.Graph = node_graph.add_node_group_item([node_1, node_2])
-    # nx.draw(sub_graph, pos=node_pos, with_labels=True)
-    # plt.show()
-
-    # print([(n.name, nbrs) for n, nbrs in node_graph.main_graph.adj.items()])
+    attribute: Attribute = Attribute(name="My attribute")
+    deserialized_attribute: Attribute = Attribute.from_json(attribute.to_json())
+    print(attribute.to_dict())
+    print(deserialized_attribute.to_dict())
+    print(attribute == deserialized_attribute)

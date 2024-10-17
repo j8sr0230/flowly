@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-
 # -*- coding: utf-8 -*-
+
 # ************************************************************************
 # * Copyright (c) 2024 Ronny Scharf-W. <ronny.scharf08@gmail.com>        *
 # *                                                                      *
@@ -22,27 +22,18 @@
 # *                                                                      *
 # ************************************************************************
 
-from __future__ import annotations
-from typing import TYPE_CHECKING, Any, Optional
-from uuid import UUID
-
-from flowly.core.base_entity import BaseEntity
-if TYPE_CHECKING:
-    from flowly.core.node import Node
+from enum import Enum
 
 
-class OperatorItem(BaseEntity):
-    def __init__(self, name: str = "Operator Item", uuid: Optional[UUID] = None,
-                 parent: Optional[Node] = None) -> None:
-        super().__init__(name= name, uuid=uuid)
+class AttributeFlags(Enum):
+    """
+    Enum representing various attribute flags
 
-        self._parent: Optional[Node] = parent
-
-    @property
-    def parent(self) -> Optional[Node]:
-        return self._parent
-
-    # noinspection PyUnusedLocal
-    @staticmethod
-    def evaluate(*args: Any, **kwargs: Any) -> Any:
-        return 0
+    Attributes:
+        OPTION (int): Represents an option flag.
+        INPUT (int): Represents an input flag.
+        OUTPUT (int): Represents an output flag.
+    """
+    OPTION: int = 0
+    INPUT: int = 1
+    OUTPUT: int = 2

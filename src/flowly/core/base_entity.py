@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-
 # -*- coding: utf-8 -*-
+
 # ************************************************************************
 # * Copyright (c) 2024 Ronny Scharf-W. <ronny.scharf08@gmail.com>        *
 # *                                                                      *
@@ -33,8 +33,29 @@ class BaseEntity:
     A base class for objects that can be uniquely identified and compared using a UUID.
 
     The `BaseEntity` class generates a UUID for each instance, which is used to make instances
-    hashable and comparable. If a UUID is not provided during initialization, a new UUID
-    is generated automatically.
+    hashable and comparable. If a UUID is not provided during initialization, a new UUID is
+    generated automatically. The UUID is immutable after the object is created.
+
+    Features:
+        - Provides a unique identifier for each instance using a UUID.
+        - Implements hashability and equality comparison based on the UUID.
+        - Supports conversion to and from dictionary and JSON representations.
+        - Uses `__slots__` to reduce memory usage by limiting instance attributes.
+
+    Attributes:
+        uuid (UUID): The unique identifier for the instance.
+
+    Examples:
+        >>> obj1 = BaseEntity()
+        >>> obj2 = BaseEntity()
+        >>> obj1 == obj2
+        False
+        >>> obj1.uuid == obj2.uuid
+        False
+        >>> obj1_dict = obj1.to_dict()
+        >>> obj3 = BaseEntity.from_dict(obj1_dict)
+        >>> obj1 == obj3
+        True
     """
 
     __slots__ = ('_uuid', '_hash')  # Use __slots__ to reduce memory usage
@@ -89,9 +110,13 @@ class BaseEntity:
         :return: An instance of `BaseEntity`.
         :rtype: BaseEntity
         """
-        if 'uuid' not in data:
+        if 'uuid' not in data:  # Check for required key
             raise ValueError("Dictionary must contain a 'uuid' key.")
-        uuid = UUID(data['uuid'])
+
+        try:
+            uuid: UUID = UUID(data['uuid'])  # Validate UUID
+        except ValueError as e:
+            raise ValueError(f"Invalid UUID: {data['uuid']}") from e
         return cls(uuid)
 
     @classmethod
@@ -104,7 +129,7 @@ class BaseEntity:
         :return: An instance of `BaseEntity`.
         :rtype: BaseEntity
         """
-        data = json.loads(json_str)
+        data: Dict[str, str] = json.loads(json_str)
         return cls.from_dict(data)
 
     @property
