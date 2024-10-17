@@ -23,7 +23,7 @@
 # ************************************************************************
 
 from __future__ import annotations
-from typing import TYPE_CHECKING, Any, Optional, Dict
+from typing import TYPE_CHECKING, Any, Optional
 from uuid import UUID
 import json
 
@@ -31,6 +31,19 @@ from flowly.core.base_entity import BaseEntity
 from flowly.core.enumerations import AttributeFlags
 if TYPE_CHECKING:
     from flowly.core.node import Node
+
+
+# A mapping of type names to actual types
+TYPE_MAP: dict[str, type] = {
+    'int': int,
+    'str': str,
+    'float': float,
+    'bool': bool,
+    'list': list,
+    'dict': dict,
+    'Any': Any,  # For the Any type
+    # Add other types as needed
+}
 
 
 class Attribute(BaseEntity):
@@ -89,7 +102,7 @@ class Attribute(BaseEntity):
         return f"<{type(self).__module__}.{type(self).__name__} {self._name} (UUID: {self.uuid}) at {hex(id(self))}>"
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> Attribute:
+    def from_dict(cls, data: dict[str, Any]) -> Attribute:
         """
         Creates an Attribute instance from a dictionary, including base properties.
 
@@ -113,10 +126,11 @@ class Attribute(BaseEntity):
         name: str = data['name']
         data_value: Any = data['data']
 
-        # Validate data_type
-        data_type: Any = globals().get(data['data_type'], Any)  # Resolve the type
-        if not isinstance(data_type, type):
-            raise ValueError(f"Invalid data_type: {data['data_type']}")
+        # Resolve the data_type from the TYPE_MAP
+        data_type_str: str = data['data_type']
+        data_type = TYPE_MAP.get(data_type_str)
+        if data_type is None:
+            raise ValueError(f"Invalid data_type: {data_type_str}")
 
         # Validate flag
         try:
@@ -139,7 +153,7 @@ class Attribute(BaseEntity):
         :return: An instance of `Attribute`.
         :rtype: Attribute
         """
-        data: Dict[str, Any] = json.loads(json_str)
+        data: dict[str, Any] = json.loads(json_str)
         return cls.from_dict(data)
 
     @property
@@ -182,7 +196,7 @@ class Attribute(BaseEntity):
         """Sets the parent associated with the attribute."""
         self._parent = value
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         """
         Converts the attribute to a dictionary representation, including base properties.
 

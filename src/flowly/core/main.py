@@ -22,7 +22,6 @@
 # *                                                                      *
 # ************************************************************************
 
-
 from flowly.core.base_entity import BaseEntity
 from flowly.core.attribute import Attribute
 
@@ -34,7 +33,7 @@ if __name__ == "__main__":
     print(deserialized_base_entity.to_dict())
     print(base_entity == deserialized_base_entity)
 
-    attribute: Attribute = Attribute(name="My attribute")
+    attribute: Attribute = Attribute(name="My attribute", data_type=int)
     deserialized_attribute: Attribute = Attribute.from_json(attribute.to_json())
     print(attribute.to_dict())
     print(deserialized_attribute.to_dict())
