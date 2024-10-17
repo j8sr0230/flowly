@@ -43,7 +43,7 @@ class BaseEntity:
         - Uses `__slots__` to reduce memory usage by limiting instance attributes.
 
     Attributes:
-        uuid (UUID): The unique identifier for the instance.
+        _uuid (UUID): The unique identifier for the instance.
 
     Examples:
         >>> obj1 = BaseEntity()

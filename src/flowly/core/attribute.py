@@ -33,19 +33,6 @@ if TYPE_CHECKING:
     from flowly.core.node import Node
 
 
-# A mapping of type names to actual types
-TYPE_MAP: dict[str, type] = {
-    'int': int,
-    'str': str,
-    'float': float,
-    'bool': bool,
-    'list': list,
-    'dict': dict,
-    'Any': Any,  # For the Any type
-    # Add other types as needed
-}
-
-
 class Attribute(BaseEntity):
     """
     Represents an attribute within a node-based system.
@@ -56,11 +43,11 @@ class Attribute(BaseEntity):
     is specified with the `data_type` attribute.
 
     Attributes:
-        name (str): The name of the attribute.
-        data (Any): The data associated with the attribute.
-        data_type (type): The type of the data.
-        flag (AttributeFlags): The attribute flag indicating its role (e.g., input, output, option).
-        parent (Optional[Node]): The parent node that this attribute belongs to.
+        _name (str): The name of the attribute.
+        _data (Any): The data associated with the attribute.
+        _data_type (type): The type of the data.
+        _flag (AttributeFlags): The attribute flag indicating its role (e.g., input, output, option).
+        _parent (Optional[Node]): The parent node that this attribute belongs to.
     """
 
     __slots__ = ('_name', '_data', '_data_type', '_flag', '_parent')
@@ -126,15 +113,14 @@ class Attribute(BaseEntity):
         name: str = data['name']
         data_value: Any = data['data']
 
-        # Resolve the data_type from the TYPE_MAP
         data_type_str: str = data['data_type']
-        data_type = TYPE_MAP.get(data_type_str)
-        if data_type is None:
-            raise ValueError(f"Invalid data_type: {data_type_str}")
-
-        # Validate flag
         try:
-            flag: AttributeFlags = AttributeFlags[data['flag']]
+            data_type: type = eval(data_type_str) # Validate data_type
+        except NameError:
+            raise ValueError(f"Invalid data type: {data_type_str}")
+
+        try:
+            flag: AttributeFlags = AttributeFlags[data['flag']]  # Validate flag
         except KeyError:
             raise ValueError(f"Invalid flag value: {data['flag']}")
 
