@@ -28,11 +28,6 @@ from enum import Enum
 class AttributeFlags(Enum):
     """
     Enum representing various attribute flags
-
-    Attributes:
-        OPTION (int): Represents an option flag.
-        INPUT (int): Represents an input flag.
-        OUTPUT (int): Represents an output flag.
     """
     OPTION: int = 0
     INPUT: int = 1

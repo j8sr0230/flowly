@@ -42,9 +42,6 @@ class BaseEntity:
         - Supports conversion to and from dictionary and JSON representations.
         - Uses `__slots__` to reduce memory usage by limiting instance attributes.
 
-    Attributes:
-        _uuid (UUID): The unique identifier for the instance.
-
     Examples:
         >>> obj1 = BaseEntity()
         >>> obj2 = BaseEntity()

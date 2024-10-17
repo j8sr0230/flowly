@@ -41,13 +41,6 @@ class Attribute(BaseEntity):
     data point within the node. Attributes can be inputs, outputs, or options depending on
     the role defined by the `flag`. The attribute's data can be of any type, and the type
     is specified with the `data_type` attribute.
-
-    Attributes:
-        _name (str): The name of the attribute.
-        _data (Any): The data associated with the attribute.
-        _data_type (type): The type of the data.
-        _flag (AttributeFlags): The attribute flag indicating its role (e.g., input, output, option).
-        _parent (Optional[Node]): The parent node that this attribute belongs to.
     """
 
     __slots__ = ('_name', '_data', '_data_type', '_flag', '_parent')
