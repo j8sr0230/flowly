@@ -47,7 +47,9 @@
 <li class="toctree-l2 current"><a class="reference internal" href="flowly.html#subpackages">Subpackages</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">flowly.core package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-flowly.core.enumerations">flowly.core.enumerations</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#module-flowly.core.base_entity">flowly.core.base_entity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-flowly.core.attribute">flowly.core.attribute</a></li>
 </ul>
 </li>
 </ul>
@@ -86,6 +88,64 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
 </section>
+<section id="module-flowly.core.enumerations">
+<span id="flowly-core-enumerations"></span><h2>flowly.core.enumerations<a class="headerlink" href="#module-flowly.core.enumerations" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="flowly.core.enumerations.AttributeFlags">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">flowly.core.enumerations.</span></span><span class="sig-name descname"><span class="pre">AttributeFlags</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names=&lt;not</span> <span class="pre">given&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">*values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start=1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary=None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flowly.core.enumerations.AttributeFlags" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Enum representing various attribute flags</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="flowly.core.enumerations.AttributeFlags.OPTION">
+<span class="sig-name descname"><span class="pre">OPTION</span></span><a class="headerlink" href="#flowly.core.enumerations.AttributeFlags.OPTION" title="Link to this definition"></a></dt>
+<dd><p>Represents an option flag.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="flowly.core.enumerations.AttributeFlags.INPUT">
+<span class="sig-name descname"><span class="pre">INPUT</span></span><a class="headerlink" href="#flowly.core.enumerations.AttributeFlags.INPUT" title="Link to this definition"></a></dt>
+<dd><p>Represents an input flag.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="flowly.core.enumerations.AttributeFlags.OUTPUT">
+<span class="sig-name descname"><span class="pre">OUTPUT</span></span><a class="headerlink" href="#flowly.core.enumerations.AttributeFlags.OUTPUT" title="Link to this definition"></a></dt>
+<dd><p>Represents an output flag.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">INPUT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">OPTION</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">OUTPUT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#id2" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
 <section id="module-flowly.core.base_entity">
 <span id="flowly-core-base-entity"></span><h2>flowly.core.base_entity<a class="headerlink" href="#module-flowly.core.base_entity" title="Link to this heading"></a></h2>
 <dl class="py class">
@@ -94,8 +154,41 @@
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>A base class for objects that can be uniquely identified and compared using a UUID.</p>
 <p>The <cite>BaseEntity</cite> class generates a UUID for each instance, which is used to make instances
-hashable and comparable. If a UUID is not provided during initialization, a new UUID
-is generated automatically.</p>
+hashable and comparable. If a UUID is not provided during initialization, a new UUID is
+generated automatically. The UUID is immutable after the object is created.</p>
+<dl class="simple">
+<dt>Features:</dt><dd><ul class="simple">
+<li><p>Provides a unique identifier for each instance using a UUID.</p></li>
+<li><p>Implements hashability and equality comparison based on the UUID.</p></li>
+<li><p>Supports conversion to and from dictionary and JSON representations.</p></li>
+<li><p>Uses <cite>__slots__</cite> to reduce memory usage by limiting instance attributes.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="flowly.core.base_entity.BaseEntity.uuid">
+<span class="sig-name descname"><span class="pre">uuid</span></span><a class="headerlink" href="#flowly.core.base_entity.BaseEntity.uuid" title="Link to this definition"></a></dt>
+<dd><p>The unique identifier for the instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>UUID</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">obj1</span> <span class="o">=</span> <span class="n">BaseEntity</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">obj2</span> <span class="o">=</span> <span class="n">BaseEntity</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">obj1</span> <span class="o">==</span> <span class="n">obj2</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">obj1</span><span class="o">.</span><span class="n">uuid</span> <span class="o">==</span> <span class="n">obj2</span><span class="o">.</span><span class="n">uuid</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">obj1_dict</span> <span class="o">=</span> <span class="n">obj1</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">obj3</span> <span class="o">=</span> <span class="n">BaseEntity</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">obj1_dict</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">obj1</span> <span class="o">==</span> <span class="n">obj3</span>
+<span class="go">True</span>
+</pre></div>
+</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="flowly.core.base_entity.BaseEntity.__init__">
 <span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uuid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flowly.core.base_entity.BaseEntity.__init__" title="Link to this definition"></a></dt>
@@ -171,8 +264,204 @@ using <cite>uuid1()</cite>.</p>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="flowly.core.base_entity.BaseEntity.uuid">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">uuid</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">UUID</span></em><a class="headerlink" href="#flowly.core.base_entity.BaseEntity.uuid" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="id3">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">uuid</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">UUID</span></em><a class="headerlink" href="#id3" title="Link to this definition"></a></dt>
+<dd><p>Returns the UUID of the instance. The UUID is cached after the first access.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The unique identifier for this instance.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>UUID</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-flowly.core.attribute">
+<span id="flowly-core-attribute"></span><h2>flowly.core.attribute<a class="headerlink" href="#module-flowly.core.attribute" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="flowly.core.attribute.Attribute">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">flowly.core.attribute.</span></span><span class="sig-name descname"><span class="pre">Attribute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uuid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Attribute'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">typing.Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">AttributeFlags.INPUT</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flowly.core.attribute.Attribute" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#flowly.core.base_entity.BaseEntity" title="flowly.core.base_entity.BaseEntity"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEntity</span></code></a></p>
+<p>Represents an attribute within a node-based system.</p>
+<p>Each <cite>Attribute</cite> instance is associated with a parent node and represents a specific
+data point within the node. Attributes can be inputs, outputs, or options depending on
+the role defined by the <cite>flag</cite>. The attribute’s data can be of any type, and the type
+is specified with the <cite>data_type</cite> attribute.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="flowly.core.attribute.Attribute.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#flowly.core.attribute.Attribute.name" title="Link to this definition"></a></dt>
+<dd><p>The name of the attribute.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="flowly.core.attribute.Attribute.data">
+<span class="sig-name descname"><span class="pre">data</span></span><a class="headerlink" href="#flowly.core.attribute.Attribute.data" title="Link to this definition"></a></dt>
+<dd><p>The data associated with the attribute.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="flowly.core.attribute.Attribute.data_type">
+<span class="sig-name descname"><span class="pre">data_type</span></span><a class="headerlink" href="#flowly.core.attribute.Attribute.data_type" title="Link to this definition"></a></dt>
+<dd><p>The type of the data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>type</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="flowly.core.attribute.Attribute.flag">
+<span class="sig-name descname"><span class="pre">flag</span></span><a class="headerlink" href="#flowly.core.attribute.Attribute.flag" title="Link to this definition"></a></dt>
+<dd><p>The attribute flag indicating its role (e.g., input, output, option).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#flowly.core.enumerations.AttributeFlags" title="flowly.core.enumerations.AttributeFlags">AttributeFlags</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="flowly.core.attribute.Attribute.parent">
+<span class="sig-name descname"><span class="pre">parent</span></span><a class="headerlink" href="#flowly.core.attribute.Attribute.parent" title="Link to this definition"></a></dt>
+<dd><p>The parent node that this attribute belongs to.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[Node]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="flowly.core.attribute.Attribute.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uuid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Attribute'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">typing.Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">AttributeFlags.INPUT</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flowly.core.attribute.Attribute.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initializes an Attribute instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>uuid</strong> (<em>Optional</em><em>[</em><em>UUID</em><em>]</em>) – The unique identifier for the attribute. If not provided, a new UUID will be generated.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – The name of the attribute. Defaults to “Attribute”.</p></li>
+<li><p><strong>data</strong> (<em>Any</em>) – The data associated with the attribute. Can be any type. Defaults to None.</p></li>
+<li><p><strong>data_type</strong> (<em>type</em>) – The type of the data. Defaults to Any.</p></li>
+<li><p><strong>flag</strong> (<a class="reference internal" href="#flowly.core.enumerations.AttributeFlags" title="flowly.core.enumerations.AttributeFlags"><em>AttributeFlags</em></a>) – The attribute flag indicating its role (e.g., input, output, option). Defaults to AttributeFlags.INPUT.</p></li>
+<li><p><strong>parent</strong> (<em>Optional</em><em>[</em><em>Node</em><em>]</em>) – The parent node to which this attribute belongs. Defaults to None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id4">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">data</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Any</span></em><a class="headerlink" href="#id4" title="Link to this definition"></a></dt>
+<dd><p>Returns the data associated with the attribute.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id5">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">data_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">type</span></em><a class="headerlink" href="#id5" title="Link to this definition"></a></dt>
+<dd><p>Returns the data type of the attribute.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id6">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">flag</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#flowly.core.enumerations.AttributeFlags" title="flowly.core.enumerations.AttributeFlags"><span class="pre">AttributeFlags</span></a></em><a class="headerlink" href="#id6" title="Link to this definition"></a></dt>
+<dd><p>Returns the flag indicating the role of the attribute.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="flowly.core.attribute.Attribute.from_dict">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flowly.core.attribute.Attribute.from_dict" title="Link to this definition"></a></dt>
+<dd><p>Creates an Attribute instance from a dictionary, including base properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – A dictionary containing the attribute properties.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An instance of <cite>Attribute</cite>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#flowly.core.attribute.Attribute" title="flowly.core.attribute.Attribute">Attribute</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If required fields are missing or invalid.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="flowly.core.attribute.Attribute.from_json">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json_str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flowly.core.attribute.Attribute.from_json" title="Link to this definition"></a></dt>
+<dd><p>Creates an Attribute instance from a JSON string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>json_str</strong> (<em>str</em>) – A JSON string representing the attribute.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An instance of <cite>Attribute</cite>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#flowly.core.attribute.Attribute" title="flowly.core.attribute.Attribute">Attribute</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id7">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#id7" title="Link to this definition"></a></dt>
+<dd><p>Returns the name of the attribute.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id8">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parent</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Node</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#id8" title="Link to this definition"></a></dt>
+<dd><p>Returns the parent node of the attribute, if any.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="flowly.core.attribute.Attribute.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#flowly.core.attribute.Attribute.to_dict" title="Link to this definition"></a></dt>
+<dd><p>Converts the attribute to a dictionary representation, including base properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary with all the attribute’s properties.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dict[str, Any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="flowly.core.attribute.Attribute.to_json">
+<span class="sig-name descname"><span class="pre">to_json</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#flowly.core.attribute.Attribute.to_json" title="Link to this definition"></a></dt>
+<dd><p>Converts the attribute to a JSON string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A JSON string representing the attribute.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="flowly.core.attribute.Attribute.uuid">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">uuid</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">UUID</span></em><a class="headerlink" href="#flowly.core.attribute.Attribute.uuid" title="Link to this definition"></a></dt>
 <dd><p>Returns the UUID of the instance. The UUID is cached after the first access.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
