@@ -28,11 +28,11 @@ from typing import Any, Optional, Dict
 import json
 
 
-class Hashable:
+class BaseEntity:
     """
     A base class for objects that can be uniquely identified and compared using a UUID.
 
-    The `Hashable` class generates a UUID for each instance, which is used to make instances
+    The `BaseEntity` class generates a UUID for each instance, which is used to make instances
     hashable and comparable. If a UUID is not provided during initialization, a new UUID
     is generated automatically.
     """
@@ -41,7 +41,7 @@ class Hashable:
 
     def __init__(self, uuid: Optional[UUID] = None) -> None:
         """
-        Initializes a Hashable instance.
+        Initializes a `BaseEntity` instance.
 
         :param uuid: The UUID for the instance. If not provided, a new UUID is generated
                      using `uuid1()`.
@@ -52,14 +52,14 @@ class Hashable:
 
     def __eq__(self, other: Any) -> bool:
         """
-        Checks if this instance is equal to another `Hashable` instance based on the UUID.
+        Checks if this instance is equal to another `BaseEntity` instance based on the UUID.
 
         :param other: The other object to compare against.
         :type other: Any
-        :return: `True` if the other object is a `Hashable` instance with the same UUID, `False` otherwise.
+        :return: `True` if the other object is a `BaseEntity` instance with the same UUID, `False` otherwise.
         :rtype: bool
         """
-        return isinstance(other, Hashable) and self._uuid == other.uuid
+        return isinstance(other, BaseEntity) and self._uuid == other.uuid
 
     def __hash__(self) -> int:
         """
@@ -80,14 +80,14 @@ class Hashable:
         return f"<{type(self).__module__}.{type(self).__name__} {self._uuid} at {hex(id(self))}>"
 
     @classmethod
-    def from_dict(cls, data: Dict[str, str]) -> Hashable:
+    def from_dict(cls, data: Dict[str, str]) -> BaseEntity:
         """
         Creates an instance from a dictionary.
 
         :param data: A dictionary containing the UUID.
         :type data: Dict[str, str]
-        :return: An instance of `Hashable`.
-        :rtype: Hashable
+        :return: An instance of `BaseEntity`.
+        :rtype: BaseEntity
         """
         if 'uuid' not in data:
             raise ValueError("Dictionary must contain a 'uuid' key.")
@@ -95,14 +95,14 @@ class Hashable:
         return cls(uuid)
 
     @classmethod
-    def from_json(cls, json_str: str) -> Hashable:
+    def from_json(cls, json_str: str) -> BaseEntity:
         """
         Creates an instance from a JSON string.
 
         :param json_str: A JSON string representing the instance.
         :type json_str: str
-        :return: An instance of `Hashable`.
-        :rtype: Hashable
+        :return: An instance of `BaseEntity`.
+        :rtype: BaseEntity
         """
         data = json.loads(json_str)
         return cls.from_dict(data)

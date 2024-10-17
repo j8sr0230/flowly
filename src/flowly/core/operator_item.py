@@ -26,12 +26,12 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Any, Optional
 from uuid import UUID
 
-from flowly.core.hashable import Hashable
+from flowly.core.base_entity import BaseEntity
 if TYPE_CHECKING:
     from flowly.core.node import Node
 
 
-class OperatorItem(Hashable):
+class OperatorItem(BaseEntity):
     def __init__(self, name: str = "Operator Item", uuid: Optional[UUID] = None,
                  parent: Optional[Node] = None) -> None:
         super().__init__(name= name, uuid=uuid)

@@ -32,24 +32,24 @@
 # from node_graph import NodeGraph
 # from node import Node
 # if TYPE_CHECKING:
-#     from hashable import Hashable
+#     from hashable import BaseEntity
 
-from flowly.core.hashable import Hashable
+from flowly.core.base_entity import BaseEntity
 
 
 # Main
 if __name__ == "__main__":
 
-    item: Hashable = Hashable()
+    item: BaseEntity = BaseEntity()
     print(item)
 
     json = item.to_json()
     print(json)
 
-    h = Hashable.from_json(json)
+    h = BaseEntity.from_json(json)
     print(h)
 
-    print(h==Hashable())
+    print(h == BaseEntity())
 
     # print("Welcome to flowly 0.0.1")
     #
@@ -77,7 +77,7 @@ if __name__ == "__main__":
     #
     # # Define a custom graph layout
     # node_sizes: list[int] = [600 if type(node) is OperatorItem else 100 for node in node_graph.main_graph]
-    # node_labels: dict[Hashable, str] = {
+    # node_labels: dict[BaseEntity, str] = {
     #     node: f"{node.parent.name}.{node.name}" if hasattr(node, "parent") else node.name for node in node_graph.main_graph
     # }
     # node_pos: dict = nx.spring_layout(node_graph.main_graph, seed=1)

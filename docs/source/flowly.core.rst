@@ -4,10 +4,10 @@ flowly.core package
 Submodules
 ----------
 
-flowly.core.hashable module
+flowly.core.base_entity
 ---------------------------
 
-.. automodule:: flowly.core.hashable
+.. automodule:: flowly.core.base_entity
    :members:
    :undoc-members:
    :show-inheritance:

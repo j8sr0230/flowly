@@ -27,12 +27,12 @@ from uuid import UUID
 
 import networkx as nx
 
-from flowly.core.hashable import Hashable
+from flowly.core.base_entity import BaseEntity
 from flowly.core.attribute import Attribute, AttributeFlags
 from flowly.core.operator_item import OperatorItem
 
 
-class Node(Hashable):
+class Node(BaseEntity):
     def __init__(self, name: str = "Node Item", uuid: Optional[UUID] = None) -> None:
         super().__init__(name=name, uuid=uuid)
 

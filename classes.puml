@@ -1,0 +1,10 @@
+@startuml classes
+set namespaceSeparator none
+class "flowly.core.base_entity.BaseEntity" as flowly.core.base_entity.BaseEntity {
+  uuid
+  from_dict(data: Dict[str, str]) -> BaseEntity
+  from_json(json_str: str) -> BaseEntity
+  to_dict() -> Dict[str, str]
+  to_json() -> str
+}
+@enduml

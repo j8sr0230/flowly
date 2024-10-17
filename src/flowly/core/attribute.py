@@ -27,7 +27,7 @@ from typing import TYPE_CHECKING, Any, Optional
 from uuid import UUID
 from enum import Enum
 
-from flowly.core.hashable import Hashable
+from flowly.core.base_entity import BaseEntity
 if TYPE_CHECKING:
     from flowly.core.node import Node
 
@@ -38,7 +38,7 @@ class AttributeFlags(Enum):
     OUTPUT: int = 2
 
 
-class Attribute(Hashable):
+class Attribute(BaseEntity):
     def __init__(self, name: str = "Attribute Item", uuid: Optional[UUID] = None, data: Any = None,
                  data_type: type = Any, flag: AttributeFlags = AttributeFlags.INPUT,
                  parent: Optional[Node] = None) -> None:

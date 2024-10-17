@@ -47,7 +47,7 @@
 <li class="toctree-l2 current"><a class="reference internal" href="flowly.html#subpackages">Subpackages</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">flowly.core package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#module-flowly.core.hashable">flowly.core.hashable module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-flowly.core.base_entity">flowly.core.base_entity</a></li>
 </ul>
 </li>
 </ul>
@@ -86,26 +86,20 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
 </section>
-<section id="module-flowly.core.hashable">
-<span id="flowly-core-hashable-module"></span><h2>flowly.core.hashable module<a class="headerlink" href="#module-flowly.core.hashable" title="Link to this heading"></a></h2>
+<section id="module-flowly.core.base_entity">
+<span id="flowly-core-base-entity"></span><h2>flowly.core.base_entity<a class="headerlink" href="#module-flowly.core.base_entity" title="Link to this heading"></a></h2>
 <dl class="py class">
-<dt class="sig sig-object py" id="flowly.core.hashable.Hashable">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">flowly.core.hashable.</span></span><span class="sig-name descname"><span class="pre">Hashable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uuid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flowly.core.hashable.Hashable" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="flowly.core.base_entity.BaseEntity">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">flowly.core.base_entity.</span></span><span class="sig-name descname"><span class="pre">BaseEntity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uuid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flowly.core.base_entity.BaseEntity" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>A base class for objects that can be uniquely identified and compared using a UUID.</p>
-<p>The <cite>Hashable</cite> class generates a UUID for each instance, which is used to make instances
+<p>The <cite>BaseEntity</cite> class generates a UUID for each instance, which is used to make instances
 hashable and comparable. If a UUID is not provided during initialization, a new UUID
 is generated automatically.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Variables<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>_uuid</strong> (<em>UUID</em>) – The unique identifier for the instance. This is either provided during
-initialization or generated automatically using <cite>uuid1()</cite>.</p>
-</dd>
-</dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="flowly.core.hashable.Hashable.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uuid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flowly.core.hashable.Hashable.__init__" title="Link to this definition"></a></dt>
-<dd><p>Initializes a Hashable instance.</p>
+<dt class="sig sig-object py" id="flowly.core.base_entity.BaseEntity.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uuid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flowly.core.base_entity.BaseEntity.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initializes a <cite>BaseEntity</cite> instance.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>uuid</strong> (<em>Optional</em><em>[</em><em>UUID</em><em>]</em>) – The UUID for the instance. If not provided, a new UUID is generated
@@ -114,10 +108,72 @@ using <cite>uuid1()</cite>.</p>
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="flowly.core.base_entity.BaseEntity.from_dict">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flowly.core.base_entity.BaseEntity.from_dict" title="Link to this definition"></a></dt>
+<dd><p>Creates an instance from a dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>str</em><em>]</em>) – A dictionary containing the UUID.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An instance of <cite>BaseEntity</cite>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#flowly.core.base_entity.BaseEntity" title="flowly.core.base_entity.BaseEntity">BaseEntity</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="flowly.core.base_entity.BaseEntity.from_json">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json_str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flowly.core.base_entity.BaseEntity.from_json" title="Link to this definition"></a></dt>
+<dd><p>Creates an instance from a JSON string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>json_str</strong> (<em>str</em>) – A JSON string representing the instance.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An instance of <cite>BaseEntity</cite>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#flowly.core.base_entity.BaseEntity" title="flowly.core.base_entity.BaseEntity">BaseEntity</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="flowly.core.base_entity.BaseEntity.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#flowly.core.base_entity.BaseEntity.to_dict" title="Link to this definition"></a></dt>
+<dd><p>Converts the instance to a dictionary representation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary with the UUID.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dict[str, str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="flowly.core.base_entity.BaseEntity.to_json">
+<span class="sig-name descname"><span class="pre">to_json</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#flowly.core.base_entity.BaseEntity.to_json" title="Link to this definition"></a></dt>
+<dd><p>Converts the instance to a JSON string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A JSON string representing the instance.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py property">
-<dt class="sig sig-object py" id="flowly.core.hashable.Hashable.uuid">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">uuid</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">UUID</span></em><a class="headerlink" href="#flowly.core.hashable.Hashable.uuid" title="Link to this definition"></a></dt>
-<dd><p>Returns the UUID of the instance.</p>
+<dt class="sig sig-object py" id="flowly.core.base_entity.BaseEntity.uuid">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">uuid</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">UUID</span></em><a class="headerlink" href="#flowly.core.base_entity.BaseEntity.uuid" title="Link to this definition"></a></dt>
+<dd><p>Returns the UUID of the instance. The UUID is cached after the first access.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The unique identifier for this instance.</p>

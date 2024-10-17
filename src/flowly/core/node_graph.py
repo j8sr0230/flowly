@@ -30,7 +30,7 @@ import networkx as nx
 from flowly.core.attribute import AttributeFlags
 
 if TYPE_CHECKING:
-    from flowly.core.hashable import Hashable
+    from flowly.core.base_entity import BaseEntity
     from flowly.core.attribute import Attribute
     from flowly.core.node import Node
 
@@ -65,12 +65,12 @@ class NodeGraph:
         return None
 
     # def add_node_group_item(self, node_items: list[Node]) -> nx.Graph:
-    #     attribute_items: list[Hashable] = []
+    #     attribute_items: list[BaseEntity] = []
     #     for node in node_items:
     #         attribute_items.extend(node.attribute_items)
     #
-    #     inner_items: list[Hashable] = attribute_items + node_items
-    #     outer_items: list[Hashable] = [item for item in self.nodes if item not in inner_items]
+    #     inner_items: list[BaseEntity] = attribute_items + node_items
+    #     outer_items: list[BaseEntity] = [item for item in self.nodes if item not in inner_items]
     #
     #     temp_graph: nx.DiGraph = self.copy()
     #     temp_graph.remove_edges_from(
