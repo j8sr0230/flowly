@@ -24,7 +24,7 @@
 
 from __future__ import annotations
 from uuid import UUID, uuid1
-from typing import Any, Optional, Dict
+from typing import Any, Optional
 import json
 
 
@@ -98,7 +98,7 @@ class BaseEntity:
         return f"<{type(self).__module__}.{type(self).__name__} {self._uuid} at {hex(id(self))}>"
 
     @classmethod
-    def from_dict(cls, data: Dict[str, str]) -> BaseEntity:
+    def from_dict(cls, data: dict[str, str]) -> BaseEntity:
         """
         Creates an instance from a dictionary.
 
@@ -126,7 +126,7 @@ class BaseEntity:
         :return: An instance of `BaseEntity`.
         :rtype: BaseEntity
         """
-        data: Dict[str, str] = json.loads(json_str)
+        data: dict[str, str] = json.loads(json_str)
         return cls.from_dict(data)
 
     @property
@@ -139,7 +139,7 @@ class BaseEntity:
         """
         return self._uuid
 
-    def to_dict(self) -> Dict[str, str]:
+    def to_dict(self) -> dict[str, str]:
         """
         Converts the instance to a dictionary representation.
 

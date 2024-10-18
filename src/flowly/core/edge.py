@@ -22,30 +22,12 @@
 # *                                                                      *
 # ************************************************************************
 
+from typing import Optional
+from uuid import UUID
+
 from flowly.core.base_entity import BaseEntity
-from flowly.core.attribute import Attribute
-from flowly.core.edge import Edge
 
-if __name__ == "__main__":
 
-    base_entity: BaseEntity = BaseEntity()
-    deserialized_base_entity: BaseEntity = BaseEntity.from_json(base_entity.to_json())
-    print(base_entity.to_dict())
-    print(deserialized_base_entity.to_dict())
-    print(base_entity == deserialized_base_entity)
-    print()
-
-    attribute: Attribute = Attribute(name="My attribute", data=1, data_type=int)
-    deserialized_attribute: Attribute = Attribute.from_json(attribute.to_json())
-    print(attribute.to_dict())
-    print(deserialized_attribute.to_dict())
-    print(attribute == deserialized_attribute)
-    print()
-
-    edge: Edge = Edge()
-    attribute.connect_edge(edge)
-    attribute.connect_edge(edge)
-    deserialized_attribute: Attribute = Attribute.from_json(attribute.to_json())
-    print(attribute.to_dict())
-    print(deserialized_attribute.to_dict())
-    print(attribute == deserialized_attribute)
+class Edge(BaseEntity):
+    def __init__(self, uuid: Optional[UUID] = None) -> None:
+        super().__init__(uuid=uuid)
