@@ -3,24 +3,32 @@ set namespaceSeparator none
 class "flowly.core.attribute.Attribute" as flowly.core.attribute.Attribute {
   data
   data_type
+  edges
   flag
+  is_multi_edge
   name
   parent
-  from_dict(data: Dict[str, Any]) -> Attribute
+  connect_edge(edge: Edge) -> None
+  disconnect_edge(edge: Edge) -> None
+  from_dict(data: dict[str, Any]) -> Attribute
   from_json(json_str: str) -> Attribute
-  to_dict() -> Dict[str, Any]
+  has_edge() -> bool
+  to_dict() -> dict[str, Any]
   to_json() -> str
 }
 class "flowly.core.base_entity.BaseEntity" as flowly.core.base_entity.BaseEntity {
   uuid
-  from_dict(data: Dict[str, str]) -> BaseEntity
+  from_dict(data: dict[str, str]) -> BaseEntity
   from_json(json_str: str) -> BaseEntity
-  to_dict() -> Dict[str, str]
+  to_dict() -> dict[str, str]
   to_json() -> str
+}
+class "flowly.core.edge.Edge" as flowly.core.edge.Edge {
 }
 class "flowly.core.enumerations.AttributeFlags" as flowly.core.enumerations.AttributeFlags {
   name
 }
 flowly.core.attribute.Attribute --|> flowly.core.base_entity.BaseEntity
+flowly.core.edge.Edge --|> flowly.core.base_entity.BaseEntity
 flowly.core.enumerations.AttributeFlags --o flowly.core.attribute.Attribute : _flag
 @enduml
