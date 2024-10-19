@@ -22,37 +22,30 @@
 # *                                                                      *
 # ************************************************************************
 
-from flowly.core.base_entity import BaseEntity
+from __future__ import annotations
+from typing import TYPE_CHECKING, Any, Optional
+from uuid import UUID
+
+from flowly.core.enumerations import AttributeFlags
 from flowly.core.attribute import Attribute
-from flowly.core.int_attribute import IntAttribute
-from flowly.core.edge import Edge
+if TYPE_CHECKING:
+    from flowly.core.node import Node
+    from flowly.core.edge import Edge
 
-if __name__ == "__main__":
 
-    base_entity: BaseEntity = BaseEntity()
-    deserialized_base_entity: BaseEntity = BaseEntity.from_json(base_entity.to_json())
-    print(base_entity.to_dict())
-    print(deserialized_base_entity.to_dict())
-    print(base_entity == deserialized_base_entity)
-    print()
-
-    attribute: Attribute = Attribute(name="My attribute", data=1, data_type=int)
-    deserialized_attribute: Attribute = Attribute.from_json(attribute.to_json())
-    print(attribute.to_dict())
-    print(deserialized_attribute.to_dict())
-    print(attribute == deserialized_attribute)
-    print()
-
-    edge: Edge = Edge()
-    attribute.connect_edge(edge)
-    deserialized_attribute: Attribute = Attribute.from_json(attribute.to_json())
-    print(attribute.to_dict())
-    print(deserialized_attribute.to_dict())
-    print(attribute == deserialized_attribute)
-    print()
-
-    int_attribute: IntAttribute = IntAttribute(name="My int attribute", data=5, data_type=int)
-    deserialized_int_attribute: Attribute = Attribute.from_json(int_attribute.to_json())
-    print(type(deserialized_int_attribute), int_attribute.to_dict())
-    print(deserialized_int_attribute.to_dict())
-    print(int_attribute == deserialized_int_attribute)
+class IntAttribute(Attribute):
+    def __init__(
+            self,
+            uuid: Optional[UUID] = None,
+            name: str = "Attribute",
+            data: Any = None,
+            data_type: type = Any,
+            flag: AttributeFlags = AttributeFlags.INPUT,
+            parent: Optional[Node] = None,
+            is_multi_edge: bool = True,
+            edges: Optional[list[Edge]] = None
+    ) -> None:
+        super().__init__(
+            uuid=uuid, name=name, data=data, data_type=data_type, flag=flag, parent=parent, is_multi_edge=is_multi_edge,
+            edges=edges
+        )

@@ -22,51 +22,62 @@
 # *                                                                      *
 # ************************************************************************
 
-from typing import Optional, Any
+from typing import Optional
 from uuid import UUID
 
-import networkx as nx
-
 from flowly.core.base_entity import BaseEntity
-from flowly.core.attribute import Attribute, AttributeFlags
-from flowly.core.operator_item import OperatorItem
+from flowly.core.attribute import Attribute
 
 
 class Node(BaseEntity):
-    def __init__(self, name: str = "Node Item", uuid: Optional[UUID] = None) -> None:
-        super().__init__(name=name, uuid=uuid)
+    """
+    Represents a node within a node-based system.
 
-        self._attribute_items: list[Attribute] = [
-            Attribute(name="A", data=0, data_type=int, flag=AttributeFlags.INPUT, parent=self),
-            Attribute(name="B", data=0, data_type=int, flag=AttributeFlags.INPUT, parent=self),
-            Attribute(name="Res", data=None, data_type=Any, flag=AttributeFlags.OUTPUT, parent=self)
-        ]
+    A `Node` is an entity that serves as a container for multiple attributes, which can represent data inputs, outputs,
+    or configuration options. Each `Node` has a unique identifier (UUID) and a name, and it can be connected to other
+    nodes through its attributes. This class provides mechanisms for managing the node's attributes and their
+    connections.
 
-        self._operator_item: OperatorItem = OperatorItem(name="Add", parent=self)
+    Inherits:
+       BaseEntity: Provides common functionality for entities within the node-based system.
+    """
 
-        self._internal_graph: nx.DiGraph = nx.DiGraph()
-        self.update_internal_graph()
+    __slots__ = ('_name', '_attributes')
+
+    def __init__(self, uuid: Optional[UUID] = None, name: str = "Node") -> None:
+        """
+        Initializes a new instance of the `Node` class.
+
+        :param uuid: The unique identifier for the node. If not provided, a new UUID will be generated.
+        :type uuid: Optional[UUID]
+        :param name: The name of the node. Defaults to "Node".
+        :type name: str
+        """
+        super().__init__(uuid=uuid)
+
+        self._name: str = name
+        self._attributes: list[Attribute] = []
 
     @property
-    def attribute_items(self) -> list[Attribute]:
-        return self._attribute_items
+    def name(self) -> str:
+        """
+        Gets or sets the name of the node.
+
+        :return: The name of the attribute.
+        :rtype: str
+        """
+        return self._name
+
+    @name.setter
+    def name(self, value: str) -> None:
+        self._name = value
 
     @property
-    def operator_item(self) -> OperatorItem:
-        return self._operator_item
+    def attributes(self) -> list[Attribute]:
+        """
+        Gets the list of registered node attributes.
 
-    @property
-    def internal_graph(self) -> nx.DiGraph:
-        return self._internal_graph
-
-    def update_internal_graph(self) -> None:
-        self._internal_graph.clear()
-
-        for attribute in self.attribute_items:
-            if attribute.flag is AttributeFlags.INPUT:
-                # noinspection PyTypeChecker
-                self._internal_graph.add_edge(attribute, self._operator_item)
-            else:
-                # noinspection PyTypeChecker
-                self._internal_graph.add_edge(self._operator_item, attribute)
-
+        :return: A list of attributes.
+        :rtype: list[Attribute]
+        """
+        return self._attributes

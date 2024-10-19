@@ -28,6 +28,15 @@ flowly.core.attribute
    :undoc-members:
    :show-inheritance:
 
+
+flowly.core.node
+---------------------------
+
+.. automodule:: flowly.core.node
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 flowly.core.edge
 ---------------------------
 

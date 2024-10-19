@@ -24,6 +24,7 @@
 
 from __future__ import annotations
 from typing import TYPE_CHECKING, Any, Optional
+import importlib
 from uuid import UUID
 import json
 
@@ -99,7 +100,7 @@ class Attribute(BaseEntity):
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> Attribute:
         """
-        Creates an `Attribute` instance from a dictionary.
+        Creates an `Attribute` instance from a dictionary, dynamically using the class name.
 
         :param data: A dictionary containing the attribute properties.
         :type data: dict[str, Any]
@@ -107,40 +108,49 @@ class Attribute(BaseEntity):
         :rtype: Attribute
         :raises ValueError: If required fields are missing or invalid.
         """
-        required_keys: list[str] = ['uuid', 'name', 'data', 'data_type', 'flag', 'is_multi_edge']
+        required_keys: list[str] = ['class_name', 'uuid', 'name', 'data', 'data_type', 'flag', 'is_multi_edge']
         for key in required_keys:
             if key not in data:
                 raise ValueError(f"Missing required key: '{key}' in input data.")
 
+        class_name: str = data.get('class_name')
+        module_name, class_basename = class_name.rsplit('.', 1)
         try:
-            uuid: UUID = UUID(data['uuid'])  # Validate UUID
-        except ValueError as e:
-            raise ValueError(f"Invalid UUID: {data['uuid']}") from e
+            module = importlib.import_module(module_name)  # Dynamically import the module and get the class
+            dynamic_class: type = getattr(module, class_basename)
 
-        name: str = data['name']
-        data_value: Any = data['data']
+            try:
+                uuid: UUID = UUID(data['uuid'])  # Validate UUID
+            except ValueError as e:
+                raise ValueError(f"Invalid UUID: {data['uuid']}") from e
 
-        data_type_str: str = data['data_type']
-        try:
-            data_type: type = eval(data_type_str) # Validate data_type
-        except NameError:
-            raise ValueError(f"Invalid data type: {data_type_str}")
+            name: str = data['name']
+            data_value: Any = data['data']
 
-        try:
-            flag: AttributeFlags = AttributeFlags[data['flag']]  # Validate flag
-        except KeyError:
-            raise ValueError(f"Invalid flag value: {data['flag']}")
+            data_type_str: str = data['data_type']
+            try:
+                data_type: type = eval(data_type_str)  # Validate data_type
+            except NameError:
+                raise ValueError(f"Invalid data type: {data_type_str}")
 
-        parent: Optional[Node] = None  # The parent must be resolved in the actual application context
-        is_multi_edge: bool = data.get('is_multi_edge', True)
+            try:
+                flag: AttributeFlags = AttributeFlags[data['flag']]  # Validate flag
+            except KeyError:
+                raise ValueError(f"Invalid flag value: {data['flag']}")
 
-        # Assume that the application will resolve the edge instances based on UUIDs
-        edges: list[Edge] = []  # This should be populated later in the actual context
+            parent: Optional[Node] = None  # The parent must be resolved in the actual application context
+            is_multi_edge: bool = data.get('is_multi_edge', True)
 
-        return cls(
-            uuid=uuid, name=name, data=data_value, data_type=data_type, flag=flag, parent=parent,
-            is_multi_edge=is_multi_edge, edges=edges
-        )
+            # Assume that the application will resolve the edge instances based on UUIDs
+            edges: list[Edge] = []  # This should be populated later in the actual context
+
+            return dynamic_class(
+                uuid=uuid, name=name, data=data_value, data_type=data_type, flag=flag, parent=parent,
+                is_multi_edge=is_multi_edge, edges=edges
+            )
+
+        except (ImportError, AttributeError) as e:
+            raise ValueError(f"Could not import class {class_name}: {e}")
 
     @classmethod
     def from_json(cls, json_str: str) -> Attribute:
@@ -295,6 +305,7 @@ class Attribute(BaseEntity):
         """
         base_dict = super().to_dict()  # Get the dictionary from BaseEntity
         attribute_dict = {
+            'class_name': f"{type(self).__module__}.{type(self).__name__}",  # Full class name
             'name': self._name,
             'data': self._data,
             'data_type': self._data_type.__name__ if self._data_type else None,
