@@ -220,7 +220,7 @@ class Attribute(BaseEntity):
     @property
     def is_multi_edge(self) -> bool:
         """
-        Gets whether the attribute allows multiple edges to be connected.
+        Returns whether the attribute allows multiple edges to be connected.
 
         :return: True if multiple edges are allowed, otherwise False.
         :rtype: bool
@@ -237,17 +237,14 @@ class Attribute(BaseEntity):
         """
         return self._edges
 
-    def connect_edge(self, edge: Edge) -> None:
-        """
-        Connects an edge to the attribute.
+    @property
+    def edge_count(self) -> int:
+        """Returns the number of connected edges.
 
-        :param edge: The edge to be connected.
-        :type edge: Edge
-        :raises ValueError: If `_is_multi_edge` is False and an edge is already connected.
+        :return: The number of connected edges.
+        :rtype: int
         """
-        if not self._is_multi_edge and len(self._edges) >= 1:
-            raise ValueError("This attribute does not allow multiple edges.")
-        self._edges.append(edge)
+        return len(self._edges)
 
     def has_edge(self) -> bool:
         """
@@ -257,6 +254,28 @@ class Attribute(BaseEntity):
         :rtype: bool
         """
         return len(self._edges) > 0
+
+    def is_edge_connected(self, edge: Edge) -> bool:
+        """Checks if a specific edge is already connected to the attribute.
+
+        :param edge: The edge to be connected.
+        :type edge: Edge
+        """
+        return edge in self._edges
+
+    def connect_edge(self, edge: Edge) -> None:
+        """
+        Connects an edge to the attribute.
+
+        :param edge: The edge to be connected.
+        :type edge: Edge
+        :raises ValueError: If `_is_multi_edge` is False and an edge is already connected.
+        """
+        if edge in self._edges:
+            raise ValueError("This edge is already connected.")
+        if not self._is_multi_edge and len(self._edges) >= 1:
+            raise ValueError("This attribute does not allow multiple edges.")
+        self._edges.append(edge)
 
     def disconnect_edge(self, edge: Edge) -> None:
         """
